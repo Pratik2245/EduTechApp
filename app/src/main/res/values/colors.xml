@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="backgroundColor">#F0F4F8</color> <!-- Light background color -->
+    <color name="primaryTextColor">#2C3E50</color> <!-- Dark text color -->
+    <color name="hintTextColor">#BDC3C7</color> <!-- Light gray hint text color -->
+    <color name="teal_700">#16A085</color>
+</resources>

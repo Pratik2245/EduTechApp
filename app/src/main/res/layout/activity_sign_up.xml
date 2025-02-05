@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/signupLayout"
+    android:gravity="center_vertical"
+    android:padding="30dp"
+    android:background="@color/backgroundColor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpActivity">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="140sp"
+        android:text="Sign Up to EduSphere"
+        android:textSize="28sp"
+        android:src="@drawable/signup"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="30dp"
+        android:fontFamily="sans-serif-medium"/>
+
+    <!-- Full Name Field -->
+    <EditText
+        android:id="@+id/fullName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:padding="15dp"
+        android:background="@drawable/edittext_background"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="15dp"
+        android:textColorHint="@color/hintTextColor"
+        android:layout_gravity="center"/>
+
+    <!-- Email Field -->
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="15dp"
+        android:background="@drawable/edittext_background"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="15dp"
+        android:textColorHint="@color/hintTextColor"
+        android:layout_gravity="center"/>
+
+    <!-- Password Field -->
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:background="@drawable/edittext_background"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="15dp"
+        android:textColorHint="@color/hintTextColor"
+        android:layout_gravity="center"/>
+
+    <!-- Confirm Password Field -->
+    <EditText
+        android:id="@+id/confirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:background="@drawable/edittext_background"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="20dp"
+        android:textColorHint="@color/hintTextColor"
+        android:layout_gravity="center"/>
+
+    <!-- ProgressBar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Sign Up Button -->
+    <Button
+        android:id="@+id/signupButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:background="@drawable/button_background"
+        android:padding="12dp"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Already have an account? Login Link -->
+    <TextView
+        android:id="@+id/loginRedirect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Login"
+        android:textColor="@color/teal_700"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>
