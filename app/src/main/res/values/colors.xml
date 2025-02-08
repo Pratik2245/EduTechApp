@@ -6,4 +6,5 @@
     <color name="primaryTextColor">#2C3E50</color> <!-- Dark text color -->
     <color name="hintTextColor">#BDC3C7</color> <!-- Light gray hint text color -->
     <color name="teal_700">#16A085</color>
+    <color name="lavender">#8692f7</color>
 </resources>
