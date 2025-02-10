@@ -8,12 +8,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class HomeActiviyCourses extends AppCompatActivity {
+import com.example.javacp.databinding.ActivityHomeActiviyCoursesBinding;
 
+public class HomeActiviyCourses extends AppCompatActivity {
+ActivityHomeActiviyCoursesBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home_activiy_courses);
+        binding=ActivityHomeActiviyCoursesBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
     }
 }
