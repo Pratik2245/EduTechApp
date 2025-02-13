@@ -24,10 +24,9 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     TextView signupRedirect;
-    private ProgressBar progressBar;
     private ProgressDialog progressDialog; // Declare ProgressDialog
     FirebaseAuth auth;
-    private EditText emailEditText, passwordEditText, confirmPasswordEditText; // Added confirmPasswordEditText
+    private EditText emailEditText, passwordEditText; // Added confirmPasswordEditText
     Button loginButton;
     Spinner userRoleSpinner; // Declare Spinner for role selection
 
@@ -42,9 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         signupRedirect = findViewById(R.id.signupRedirect);
         emailEditText = findViewById(R.id.email);
-        passwordEditText = findViewById(R.id.password);
-        confirmPasswordEditText = findViewById(R.id.confirmPassword); // Initialize confirm password field
-        progressBar = findViewById(R.id.progressBar);
+        passwordEditText = findViewById(R.id.password); // Initialize confirm password field
         loginButton = findViewById(R.id.loginButton);
         userRoleSpinner = findViewById(R.id.userRoleSpinner); // Initialize Spinner
 
@@ -70,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
-            String confirmPassword = confirmPasswordEditText.getText().toString(); // Get confirm password
             String selectedRole = userRoleSpinner.getSelectedItem().toString(); // Get selected role
 
             if (email.isEmpty() || password.isEmpty()) {
@@ -81,9 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
             } else if (!isValidPassword(password)) {
                 Toast.makeText(LoginActivity.this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
-            } else if (!password.equals(confirmPassword)) { // Check if password and confirm password match
-                Toast.makeText(LoginActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-            } else {
+            }  else {
                 loginUser(email, password, selectedRole);
             }
         });

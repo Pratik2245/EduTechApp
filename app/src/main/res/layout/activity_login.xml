@@ -60,28 +60,6 @@
             android:textColorHint="@color/hintTextColor"
             android:layout_gravity="center"/>
     </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Confirm Password Field -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/confirmPasswordLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hintAnimationEnabled="false"
-        android:layout_marginBottom="20dp"
-        app:endIconMode="password_toggle">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/confirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:padding="15dp"
-            android:textColor="@color/primaryTextColor"
-            android:textColorHint="@color/hintTextColor"
-            android:layout_gravity="center"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
     <!-- Spinner -->
     <Spinner
         android:id="@+id/userRoleSpinner"

@@ -3,6 +3,7 @@
     <string-array name="role_array">
         <item>Select a role</item>
         <item>admin</item>
+        <item>teacher</item>
         <item>student</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
