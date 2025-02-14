@@ -10,10 +10,10 @@
 
       <item android:id="@+id/addCourses"
           android:icon="@drawable/plus22"
-          android:title="Add Courses" />
+          android:title="Add Teachers" />
         <item android:id="@+id/coursesList"
             android:icon="@drawable/catalogue"
-            android:title="Add Courses" />
+            android:title="Courses" />
     </menu>
 </item>
   </group>

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class Frag_3AddCoursesFragment extends Fragment {
+public class Frag_3AddTeachersFragment extends Fragment {
 
 
 
@@ -17,6 +17,6 @@ public class Frag_3AddCoursesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_frag_3_add_courses, container, false);
+        return inflater.inflate(R.layout.fragment_frag_3_add_teachers, container, false);
     }
 }

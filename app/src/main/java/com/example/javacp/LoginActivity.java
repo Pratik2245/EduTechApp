@@ -39,11 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         auth = FirebaseAuth.getInstance();
-//        check current user exists or not
-        FirebaseUser user=auth.getCurrentUser();
-        if(user!=null){
-            redirectToDashboard();
-        }
+
         signupRedirect = findViewById(R.id.signupRedirect);
         emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password); // Initialize confirm password field
@@ -133,30 +129,5 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void redirectToDashboard() {
-        // Get current user ID
-        String userId = auth.getCurrentUser().getUid();
-        FirebaseFirestore.getInstance().collection("users")
-                .document(userId)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String role = documentSnapshot.getString("role");
-                        if ("admin".equals(role)) {
-                            // Redirect to Admin Dashboard
-                            Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else if ("student".equals(role)) {
-                            // Redirect to Student Dashboard
-                            Intent intent = new Intent(LoginActivity.this, HomeActiviyCourses.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(LoginActivity.this, "Error retrieving user data.", Toast.LENGTH_SHORT).show();
-                });
-    }
+
 }

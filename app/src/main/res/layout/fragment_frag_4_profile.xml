@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:enabled="false"
+                android:textColor="@color/black"
                 android:padding="12dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:padding="12dp"
+                android:textColor="@color/black"
                 android:inputType="textEmailAddress"
                 android:enabled="false"/>
         </com.google.android.material.textfield.TextInputLayout>

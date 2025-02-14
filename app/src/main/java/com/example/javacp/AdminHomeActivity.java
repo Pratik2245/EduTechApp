@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.javacp.databinding.ActivityAdminHomeBinding;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -53,8 +52,8 @@ public class AdminHomeActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else if (id == R.id.addCourses) {
-                 replaceFragments(new Frag_3AddCoursesFragment());
-                }else if (id == R.id.addCourses) {
+                 replaceFragments(new Frag_3AddTeachersFragment());
+                }else if (id == R.id.coursesList) {
                     replaceFragments(new Frag_2CoursesFragment());
                 }else if (id == R.id.rating) {
                     // Redirect to Play Store for rating the app
@@ -87,7 +86,7 @@ public class AdminHomeActivity extends AppCompatActivity {
             } else if (selectedId == R.id.Courses) {
                 replaceFragments(new Frag_2CoursesFragment());
             } else if (selectedId == R.id.addCourse) {
-                replaceFragments(new Frag_3AddCoursesFragment());
+                replaceFragments(new Frag_3AddTeachersFragment());
             } else if (selectedId == R.id.profile) {
                 replaceFragments(new Frag_4ProfileFragment());
             }
