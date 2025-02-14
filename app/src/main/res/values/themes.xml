@@ -2,17 +2,25 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.JavaCP" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- App primary colors -->
-        <item name="colorPrimary">@color/lavender</item>
-        <item name="colorPrimaryVariant">@color/lavender</item>
+<!--        <item name="colorPrimary">@color/lavender</item>-->
+<!--        <item name="colorPrimaryVariant">@color/lavender</item>-->
 
         <!-- Manually add missing Material attributes -->
+        <item name="android:statusBarColor">@color/colorToolbar</item>
 
         <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/black</item>
-        <item name="colorPrimarySurface">@color/lavender</item>
+<!--        <item name="colorOnSurface">@color/black</item>-->
+<!--        <item name="colorPrimarySurface">@color/lavender</item>-->
+    </style>
+    <style name="CustomBottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconSize">24dp</item> <!-- Adjust icon size if needed -->
+        <item name="itemTextAppearanceActive">@style/BottomNavTextStyle</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavTextStyle</item>
     </style>
 
-
+    <style name="BottomNavTextStyle">
+        <item name="android:textSize">10sp</item>
+    </style>
 
     <style name="Theme.JavaCP" parent="Base.Theme.JavaCP" />
 </resources>

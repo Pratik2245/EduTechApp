@@ -54,6 +54,8 @@ public class AdminHomeActivity extends AppCompatActivity {
                     finish();
                 } else if (id == R.id.addCourses) {
                  replaceFragments(new Frag_3AddCoursesFragment());
+                }else if (id == R.id.addCourses) {
+                    replaceFragments(new Frag_2CoursesFragment());
                 }else if (id == R.id.rating) {
                     // Redirect to Play Store for rating the app
                     String appPackageName = getPackageName();

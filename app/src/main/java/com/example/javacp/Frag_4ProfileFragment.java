@@ -45,7 +45,6 @@ public class Frag_4ProfileFragment extends Fragment {
 //
         if(currentUser!=null){
             String userId=currentUser.getUid();
-            Toast.makeText(getContext(), "userid="+userId, Toast.LENGTH_SHORT).show();
             FirebaseFirestore firestore=FirebaseFirestore.getInstance();
             firestore.collection("users").document(userId).get().addOnSuccessListener(documentSnapshot -> {
                 if(documentSnapshot.exists()){
@@ -73,6 +72,7 @@ public class Frag_4ProfileFragment extends Fragment {
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                assert currentUser != null;
                 String userId = currentUser.getUid();
                 FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -99,7 +99,6 @@ public class Frag_4ProfileFragment extends Fragment {
                             editTextPhone.requestFocus();
                             return;
                         }
-
                         // Create a map with all fields to be updated
                         Map<String, Object> updatedData = new HashMap<>();
                         updatedData.put("fullName", currentFullName);

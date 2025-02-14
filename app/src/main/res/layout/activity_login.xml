@@ -11,7 +11,6 @@
     android:padding="30dp"
     android:background="@color/backgroundColor"
     tools:context=".LoginActivity">
-
     <!-- Title -->
     <ImageView
         android:layout_width="wrap_content"

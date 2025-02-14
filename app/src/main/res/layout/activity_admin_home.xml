@@ -10,15 +10,14 @@
         <!-- Main Constraint Layout -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/lavender">
+            android:layout_height="match_parent">
 
                 <!-- Toolbar -->
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@color/colorToolbar"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -35,16 +34,16 @@
                     app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
-
                 <!-- Bottom Navigation View -->
                 <com.google.android.material.bottomnavigation.BottomNavigationView
                     android:id="@+id/bottomNavigationView"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@color/selectedIconColor"
                     app:itemHorizontalTranslationEnabled="false"
                     app:contentInsetStart="0dp"
                     app:contentInsetEnd="0dp"
+                    style="@style/CustomBottomNavStyle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
