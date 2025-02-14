@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
   <group android:checkableBehavior="single">
       <item android:id="@+id/home"
           android:icon="@drawable/home"
-          android:title="home"/>
+          android:title="Home"/>
       <item android:id="@+id/profile"
           android:icon="@drawable/profileuser"
-          android:title="home"/>
+          android:title="Profile"/>
+      <item android:id="@+id/addCourses"
+          android:icon="@drawable/addcousersidebar"
+          android:title="Add Courses" />
   </group>
   <group android:checkableBehavior="single">
       <item android:id="@+id/logout"
           android:icon="@drawable/logout"
-          android:title="logout"/>
+          android:title="Logout"/>
   </group>
     <group android:checkableBehavior="single">
       <item android:id="@+id/rating"
           android:icon="@drawable/rate"
-          android:title="rate"/>
+          android:title="Rating"/>
       <item android:id="@+id/share"
           android:icon="@drawable/share"
-          android:title="share"/>
+          android:title="Share"/>
   </group>
 </menu>

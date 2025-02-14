@@ -52,6 +52,10 @@ public class SignUpActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        FirebaseUser user=auth.getCurrentUser();
+        if(user!=null){
+            redirectToDashboard();
+        }
         // Initialize the ProgressDialog
         progressDialog = new ProgressDialog(SignUpActivity.this);
         progressDialog.setMessage("Signing up..."); // Set loading message
@@ -178,4 +182,32 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.dismiss();  // Dismiss the ProgressDialog after the process is done
         signupButton.setEnabled(true);  // Enable the button again
     }
+
+    private void redirectToDashboard() {
+        // Get current user ID
+        String userId = auth.getCurrentUser().getUid();
+        FirebaseFirestore.getInstance().collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String role = documentSnapshot.getString("role");
+                        if ("admin".equals(role)) {
+                            // Redirect to Admin Dashboard
+                            Intent intent = new Intent(SignUpActivity.this, AdminHomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else if ("student".equals(role)) {
+                            // Redirect to Student Dashboard
+                            Intent intent = new Intent(SignUpActivity.this, HomeActiviyCourses.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(SignUpActivity.this, "Error retrieving user data.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
 }
