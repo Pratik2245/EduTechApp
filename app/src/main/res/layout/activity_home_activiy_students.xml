@@ -24,7 +24,7 @@
             android:background="@color/colorToolbar"
             app:title="Student Home"
             app:titleTextColor="@color/black"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+             />
 
         <!-- Fragment Container for Navigation -->
         <FrameLayout

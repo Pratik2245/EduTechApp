@@ -15,6 +15,7 @@
     <style name="CustomBottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="itemIconSize">24dp</item> <!-- Adjust icon size if needed -->
         <item name="itemTextAppearanceActive">@style/BottomNavTextStyle</item>
+        <item name="android:statusBarColor">@color/colorToolbar</item>
         <item name="itemTextAppearanceInactive">@style/BottomNavTextStyle</item>
     </style>
 

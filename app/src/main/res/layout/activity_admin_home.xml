@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     style="@style/CustomBottomNavStyle"
                     android:background="@color/selectedIconColor"
-                    app:menu="@menu/bottom_navigation_bar_students" />
+                    app:menu="@menu/bottom_navigation_bar_admin" />
         </LinearLayout>
 
         <!-- Navigation Drawer -->
