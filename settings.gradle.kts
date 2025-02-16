@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven ( url="https://jitpack.io" ) // Make sure to close the block properly
     }
 }
 

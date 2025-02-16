@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
@@ -138,38 +137,36 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void createUser(String userEmail, String userPassword, String userFullName) {
         auth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser authUser = auth.getCurrentUser();
-                            if (authUser != null) {
-                                String userId = authUser.getUid();
-                                Map<String, Object> userMap = new HashMap<>();
-                                userMap.put("fullName", userFullName);
-                                userMap.put("email", userEmail);
-                                userMap.put("role", "student");
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser authUser = auth.getCurrentUser();
+                        if (authUser != null) {
+                            String userId = authUser.getUid();
+                            Map<String, Object> userMap = new HashMap<>();
+                            userMap.put("fullName", userFullName);
+                            userMap.put("email", userEmail);
+                            userMap.put("role", "student");
 
-                                db.collection("users").document(userId).set(userMap)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-                                                Toast.makeText(SignUpActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
-                                                hideProgress(); // Hide ProgressDialog after success
-                                                Intent intent = new Intent(SignUpActivity.this, HomeActiviyCourses.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Toast.makeText(SignUpActivity.this, "Error saving data.", Toast.LENGTH_SHORT).show();
-                                            hideProgress(); // Hide progress if Firestore fails
-                                        });
-                            }
-                        } else {
-                            Toast.makeText(SignUpActivity.this, "Sign Up Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            hideProgress(); // Hide progress if signup fails
+                            db.collection("users").document(userId).set(userMap)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(SignUpActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
+                                            hideProgress(); // Hide ProgressDialog after success
+                                            Intent intent = new Intent(SignUpActivity.this, HomeActivityStudents.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(this, "error"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignUpActivity.this, "Error saving data.", Toast.LENGTH_SHORT).show();
+                                        hideProgress(); // Hide progress if Firestore fails
+                                    });
                         }
+                    } else {
+                        Toast.makeText(SignUpActivity.this, "Sign Up Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        hideProgress(); // Hide progress if signup fails
                     }
                 });
     }

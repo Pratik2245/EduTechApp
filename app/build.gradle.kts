@@ -42,7 +42,10 @@ dependencies {
         implementation(libs.activity)
         implementation(libs.constraintlayout)
         implementation(libs.firebase.auth)
-        implementation(libs.firebase.firestore) // <-- Added Meow Bottom Navigation
+        implementation(libs.firebase.firestore) // Meow Bottom Navigation
+        implementation(libs.navigation.fragment)   // Navigation Component for Fragments
+        implementation(libs.navigation.ui)         // Navigation UI utilities
+        implementation(libs.lifecycle.common)
         testImplementation(libs.junit)
         androidTestImplementation(libs.ext.junit)
         androidTestImplementation(libs.espresso.core)

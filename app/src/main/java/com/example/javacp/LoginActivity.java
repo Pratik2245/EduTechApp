@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,9 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     TextView signupRedirect;
@@ -105,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
                         } else if (selectedRole.equals("student")) {
                             // Redirect to Student Dashboard
-                            Intent intent = new Intent(LoginActivity.this, HomeActiviyCourses.class); // Replace with your Student activity
+                            Intent intent = new Intent(LoginActivity.this, HomeActivityStudents.class); // Replace with your Student activity
                             startActivity(intent);
                             finish();
                         }

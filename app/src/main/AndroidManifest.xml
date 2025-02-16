@@ -19,7 +19,7 @@
             android:windowSoftInputMode="adjustNothing"
             android:exported="true" />
         <activity
-            android:name=".HomeActiviyCourses"
+            android:name=".HomeActivityStudents"
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"

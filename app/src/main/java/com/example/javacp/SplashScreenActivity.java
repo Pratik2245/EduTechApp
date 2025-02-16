@@ -50,7 +50,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                             finish();
                         } else if ("student".equals(role)) {
                             // Redirect to Student Dashboard
-                            Intent intent = new Intent(SplashScreenActivity.this, HomeActiviyCourses.class);
+                            Intent intent = new Intent(SplashScreenActivity.this, HomeActivityStudents.class);
                             startActivity(intent);
                             finish();
                         }
