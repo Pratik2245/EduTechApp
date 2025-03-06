@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     id("com.google.gms.google-services")
+
 }
 
 android {
@@ -36,13 +37,14 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.auth)
     dependencies {
         implementation(libs.appcompat)
         implementation(libs.material)
         implementation(libs.activity)
         implementation(libs.constraintlayout)
         implementation(libs.firebase.auth)
-        implementation(libs.firebase.firestore) // Meow Bottom Navigation
+        implementation(libs.firebase.firestore)
         implementation(libs.navigation.fragment)   // Navigation Component for Fragments
         implementation(libs.navigation.ui)         // Navigation UI utilities
         implementation(libs.lifecycle.common)

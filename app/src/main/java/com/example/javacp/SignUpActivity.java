@@ -147,7 +147,7 @@ public class SignUpActivity extends AppCompatActivity {
                             userMap.put("email", userEmail);
                             userMap.put("role", "student");
 
-                            db.collection("users").document(userId).set(userMap)
+                            db.collection("students").document(userId).set(userMap)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
