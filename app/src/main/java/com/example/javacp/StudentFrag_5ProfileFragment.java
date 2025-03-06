@@ -4,61 +4,121 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StudentFrag_5ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class StudentFrag_5ProfileFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public StudentFrag_5ProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentFrag_5ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StudentFrag_5ProfileFragment newInstance(String param1, String param2) {
-        StudentFrag_5ProfileFragment fragment = new StudentFrag_5ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    private TextView fullNameTextView, emailTextView,editTextRole,editTextBio,editTextPhone;
+    private Button btnUpdateProfile;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_frag_5_profile, container, false);
+        View rootView=inflater.inflate(R.layout.fragment_student_frag_5_profile, container, false);
+        fullNameTextView= rootView.findViewById(R.id.editTextFullName);
+        emailTextView=rootView.findViewById(R.id.editTextEmail);
+        editTextRole=rootView.findViewById(R.id.editTextRole);
+        editTextBio=rootView.findViewById(R.id.editTextBio);
+        editTextPhone=rootView.findViewById(R.id.editTextPhone);
+        btnUpdateProfile=rootView.findViewById(R.id.btnUpdateProfile);
+
+        FirebaseUser currentUser= FirebaseAuth.getInstance().getCurrentUser();
+//
+        if(currentUser!=null){
+            String userId=currentUser.getUid();
+            FirebaseFirestore firestore=FirebaseFirestore.getInstance();
+            firestore.collection("users").document(userId).get().addOnSuccessListener(documentSnapshot -> {
+                if(documentSnapshot.exists()){
+                    String name = documentSnapshot.getString("fullName");
+                    String email1 = documentSnapshot.getString("email");
+                    String role=documentSnapshot.getString("role");
+                    String bio=documentSnapshot.getString("bio");
+                    String phoneNumber=documentSnapshot.getString("phone");
+                    fullNameTextView.setText(name);
+                    editTextRole.setText(role);
+                    emailTextView.setText(email1);
+                    editTextBio.setText(bio!=null?bio:"");
+                    editTextPhone.setText(phoneNumber!=null?phoneNumber:"");
+                }
+
+                else {
+                    Toast.makeText(requireContext(), "User data not found", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(e -> {
+                Log.e("ProfileFragment", "Error fetching user data", e);
+                Toast.makeText(requireContext(), "Error in Profile Fragment", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                assert currentUser != null;
+                String userId = currentUser.getUid();
+                FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+                // First, get the current document
+                firestore.collection("users").document(userId).get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Retain existing values
+                        String currentFullName = documentSnapshot.getString("fullName");
+                        String currentEmail = documentSnapshot.getString("email");
+                        String currentRole = documentSnapshot.getString("role");
+
+                        // Get updated values
+                        String updatedPhone = editTextPhone.getText().toString().trim();
+                        String updatedBio = editTextBio.getText().toString().trim();
+
+                        // Validate Phone Number
+                        if (updatedPhone.isEmpty()) {
+                            editTextPhone.setError("Phone number is required");
+                            editTextPhone.requestFocus();
+                            return;
+                        }
+                        if (updatedPhone.length() != 10 || !updatedPhone.matches("\\d+")) {
+                            editTextPhone.setError("Enter a valid 10-digit phone number");
+                            editTextPhone.requestFocus();
+                            return;
+                        }
+                        // Create a map with all fields to be updated
+                        Map<String, Object> updatedData = new HashMap<>();
+                        updatedData.put("fullName", currentFullName);
+                        updatedData.put("email", currentEmail);
+                        updatedData.put("role", currentRole);
+                        updatedData.put("phone", updatedPhone);
+                        updatedData.put("bio", updatedBio);
+
+                        // Update the document with the merged data
+                        firestore.collection("users").document(userId)
+                                .set(updatedData) // Use set with complete data
+                                .addOnSuccessListener(unused -> {
+                                    Toast.makeText(requireContext(), "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(requireContext(), "Failed to update profile", Toast.LENGTH_SHORT).show();
+                                });
+                    } else {
+                        Toast.makeText(requireContext(), "User data not found", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(e -> {
+                    Log.e("ProfileFragment", "Error fetching user data", e);
+                    Toast.makeText(requireContext(), "Error fetching user data", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+        return rootView;
     }
 }

@@ -38,10 +38,10 @@
                 android:id="@+id/editTextFullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:enabled="false"
+                android:padding="12dp"
                 android:textColor="@color/black"
-                android:padding="12dp"/>
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Email (Non-Editable) -->
@@ -95,10 +95,11 @@
                 android:id="@+id/editTextRole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-
+                android:enabled="false"
+                android:textColor="@color/black"
+                android:inputType="phone"
                 android:padding="12dp"
-                android:inputType="phone"/>
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
         <!-- Bio -->
         <com.google.android.material.textfield.TextInputLayout

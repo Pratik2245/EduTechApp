@@ -4,88 +4,60 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class SplashScreenActivity extends AppCompatActivity {
-    private FirebaseAuth auth;
-    private FirebaseFirestore db;
-
+    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_splash_screen);
-
         auth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        if(user!=null){
+            redirectToDashboard();
+        }else {
+            new Handler().postDelayed(() -> {
+                // Start the main activity
+                Intent intent = new Intent(SplashScreenActivity.this, SignUpActivity.class);
+                startActivity(intent);
 
-        new Handler().postDelayed(this::checkUser, 500);
-    }
-
-    private void checkUser() {
-        FirebaseUser user = auth.getCurrentUser();
-        if (user != null) {
-            getUserRole(user.getUid());
-        } else {
-            startActivity(new Intent(this, SignUpActivity.class));
-            finish();
-        }
-    }
-
-    private void getUserRole(String userId) {
-        List<String> collections = Arrays.asList("admin", "students", "teachers");
-
-        List<Task<DocumentSnapshot>> tasks = Arrays.asList(
-                db.collection("admin").document(userId).get(),
-                db.collection("students").document(userId).get(),
-                db.collection("teachers").document(userId).get()
-        );
-
-        Tasks.whenAllSuccess(tasks).addOnSuccessListener(results -> {
-            for (int i = 0; i < results.size(); i++) {
-                DocumentSnapshot document = (DocumentSnapshot) results.get(i);
-                if (document.exists()) {
-                    String role = collections.get(i);
-                    Toast.makeText(this, "role"+role, Toast.LENGTH_SHORT).show();// Role is the collection name
-                    redirectToDashboard(role);
-                    return;
-                }
-            }
-            Toast.makeText(this, "User role not found.", Toast.LENGTH_SHORT).show();
-            finish();
-        }).addOnFailureListener(e -> {
-            Toast.makeText(this, "Error retrieving role.", Toast.LENGTH_SHORT).show();
-            finish();
-        });
-    }
-
-    private void redirectToDashboard(String role) {
-        Class<?> targetActivity;
-        switch (role) {
-            case "admin":
-                targetActivity = AdminHomeActivity.class;
-                break;
-            case "students":
-                targetActivity = HomeActivityStudents.class;
-                break;
-            case "teachers":
-                targetActivity = HomeActivityStudents.class; // Replace with actual teacher activity
-                break;
-            default:
-                Toast.makeText(this, "Invalid user role.", Toast.LENGTH_SHORT).show();
+                // Close the splash activity
                 finish();
-                return;
+            }, 1000);
         }
-        startActivity(new Intent(this, targetActivity));
-        finish();
+    }
+    private void redirectToDashboard() {
+        // Get current user ID
+        String userId = auth.getCurrentUser().getUid();
+        FirebaseFirestore.getInstance().collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String role = documentSnapshot.getString("role");
+                        if ("admin".equals(role)) {
+                            // Redirect to Admin Dashboard
+                            Intent intent = new Intent(SplashScreenActivity.this, AdminHomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else if ("student".equals(role)) {
+                            // Redirect to Student Dashboard
+                            Intent intent = new Intent(SplashScreenActivity.this, HomeActivityStudents.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(SplashScreenActivity.this, "Error retrieving user data.", Toast.LENGTH_SHORT).show();
+                });
     }
 }
