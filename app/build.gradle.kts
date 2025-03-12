@@ -38,6 +38,10 @@ android {
 
 dependencies {
     implementation(libs.firebase.auth)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.activity)
+    implementation(libs.constraintlayout)
     dependencies {
         implementation(libs.appcompat)
         implementation(libs.material)

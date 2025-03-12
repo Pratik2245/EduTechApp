@@ -1,7 +1,7 @@
 package com.example.javacp;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog; // ✅ Import ProgressDialog
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText confirmPassword, password, email, fullName;
     FirebaseAuth auth;
     FirebaseFirestore db;
-    private ProgressDialog progressDialog;  // ✅ Added ProgressDialog
+    private ProgressDialog progressDialog;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -42,137 +43,147 @@ public class SignUpActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sign_up);
 
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // If user is already logged in, redirect to their home screen
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            redirectToDashboard(currentUser.getUid());
+        }
+
         loginRedirect = findViewById(R.id.loginRedirect);
         confirmPassword = findViewById(R.id.confirmPassword);
         password = findViewById(R.id.password);
         email = findViewById(R.id.email);
         fullName = findViewById(R.id.fullName);
         signupButton = findViewById(R.id.signupButton);
-        auth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
 
-        // Initialize the ProgressDialog
         progressDialog = new ProgressDialog(SignUpActivity.this);
-        progressDialog.setMessage("Signing up..."); // Set loading message
-        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+        progressDialog.setMessage("Signing up...");
+        progressDialog.setCancelable(false);
 
         loginRedirect.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                 finish();
                 return true;
             }
         });
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String userEmail = email.getText().toString().trim();
-                String userPassword = password.getText().toString().trim();
-                String userFullName = fullName.getText().toString().trim();
-                String userConfirmPass = confirmPassword.getText().toString().trim();
+        signupButton.setOnClickListener(v -> registerUser());
+    }
 
-                if (userFullName.isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "Full Name is required", Toast.LENGTH_SHORT).show();
-                    return;
+    private void registerUser() {
+        String userEmail = email.getText().toString().trim();
+        String userPassword = password.getText().toString().trim();
+        String userFullName = fullName.getText().toString().trim();
+        String userConfirmPass = confirmPassword.getText().toString().trim();
+
+        if (userFullName.isEmpty() || userEmail.isEmpty() || userPassword.isEmpty() || userConfirmPass.isEmpty()) {
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
+            Toast.makeText(this, "Enter a valid email address", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (userPassword.length() < 6) {
+            Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!userPassword.equals(userConfirmPass)) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        progressDialog.show();
+        signupButton.setEnabled(false);
+
+        auth.fetchSignInMethodsForEmail(userEmail).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                List<String> signInMethods = task.getResult().getSignInMethods();
+                if (signInMethods != null && !signInMethods.isEmpty()) {
+                    Toast.makeText(this, "Email already registered. Logging you in...", Toast.LENGTH_SHORT).show();
+                    loginExistingUser(userEmail, userPassword);
+                } else {
+                    createNewUser(userEmail, userPassword, userFullName);
                 }
-
-                if (userEmail.isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "Email is required", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
-                    Toast.makeText(SignUpActivity.this, "Enter a valid email address", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (userPassword.isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "Password is required", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (userPassword.length() < 6) {
-                    Toast.makeText(SignUpActivity.this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (userConfirmPass.isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "Confirm Password is required", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (!userPassword.equals(userConfirmPass)) {
-                    Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // Show ProgressDialog when sign-up starts
-                progressDialog.show();
-
-                // Disable the button to prevent multiple clicks
-                signupButton.setEnabled(false);
-
-                auth.fetchSignInMethodsForEmail(userEmail)
-                        .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                                if (task.isSuccessful()) {
-                                    List<String> signInMethods = task.getResult().getSignInMethods();
-                                    if (signInMethods != null && !signInMethods.isEmpty()) {
-                                        // Email is already registered
-                                        Toast.makeText(SignUpActivity.this, "Email already in use. Please log in.", Toast.LENGTH_SHORT).show();
-                                        hideProgress(); // Hide progress if email exists
-                                    } else {
-                                        // Email is not in use, proceed with signup
-                                        createUser(userEmail, userPassword, userFullName);
-                                    }
-                                } else {
-                                    Toast.makeText(SignUpActivity.this, "Error checking email.", Toast.LENGTH_SHORT).show();
-                                    hideProgress(); // Hide progress if error occurs
-                                }
-                            }
-                        });
+            } else {
+                Toast.makeText(this, "Error checking email.", Toast.LENGTH_SHORT).show();
+                hideProgress();
             }
         });
     }
 
-    private void createUser(String userEmail, String userPassword, String userFullName) {
-        auth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser authUser = auth.getCurrentUser();
-                        if (authUser != null) {
-                            String userId = authUser.getUid();
-                            Map<String, Object> userMap = new HashMap<>();
-                            userMap.put("fullName", userFullName);
-                            userMap.put("email", userEmail);
-                            userMap.put("role", "student");
+    private void loginExistingUser(String email, String password) {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                FirebaseUser user = auth.getCurrentUser();
+                if (user != null) {
+                    redirectToDashboard(user.getUid());
+                }
+            } else {
+                Toast.makeText(this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                hideProgress();
+            }
+        });
+    }
 
-                            db.collection("users").document(userId).set(userMap)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Toast.makeText(SignUpActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
-                                            hideProgress(); // Hide ProgressDialog after success
-                                            Intent intent = new Intent(SignUpActivity.this, HomeActivityStudents.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        Toast.makeText(this, "error"+e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        Toast.makeText(SignUpActivity.this, "Error saving data.", Toast.LENGTH_SHORT).show();
-                                        hideProgress(); // Hide progress if Firestore fails
-                                    });
-                        }
-                    } else {
-                        Toast.makeText(SignUpActivity.this, "Sign Up Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        hideProgress(); // Hide progress if signup fails
-                    }
-                });
+    private void createNewUser(String userEmail, String userPassword, String userFullName) {
+        auth.createUserWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                FirebaseUser authUser = auth.getCurrentUser();
+                if (authUser != null) {
+                    String userId = authUser.getUid();
+                    Map<String, Object> userMap = new HashMap<>();
+                    userMap.put("fullName", userFullName);
+                    userMap.put("email", userEmail);
+                    userMap.put("role", "student");
+
+                    db.collection("users").document(userId).set(userMap).addOnSuccessListener(unused -> {
+                        Toast.makeText(this, "Sign-up Successful", Toast.LENGTH_SHORT).show();
+                        redirectToDashboard(userId);
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(this, "Error saving user data.", Toast.LENGTH_SHORT).show();
+                        hideProgress();
+                    });
+                }
+            } else {
+                Toast.makeText(this, "Sign Up Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                hideProgress();
+            }
+        });
+    }
+
+    private void redirectToDashboard(String userId) {
+        db.collection("users").document(userId).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String role = documentSnapshot.getString("role");
+                Intent intent;
+                if ("admin".equals(role)) {
+                    intent = new Intent(SignUpActivity.this, AdminHomeActivity.class);
+                } else if ("student".equals(role)){
+                    intent = new Intent(SignUpActivity.this, HomeActivityStudents.class);
+                }else {
+                    intent=new Intent(SignUpActivity.this,TeacherHomeActivity.class);
+                }
+                startActivity(intent);
+                finish();
+            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Error retrieving user data.", Toast.LENGTH_SHORT).show();
+            hideProgress();
+        });
     }
 
     private void hideProgress() {
-        progressDialog.dismiss();  // Dismiss the ProgressDialog after the process is done
-        signupButton.setEnabled(true);  // Enable the button again
+        progressDialog.dismiss();
+        signupButton.setEnabled(true);
     }
 }

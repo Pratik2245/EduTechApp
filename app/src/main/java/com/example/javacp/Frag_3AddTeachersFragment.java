@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
@@ -91,10 +90,11 @@ public class Frag_3AddTeachersFragment extends Fragment {
                     teacherMap.put("experience", experience);
                     teacherMap.put("role", "teacher");
 
-                    db.collection("teachers").document(userId).set(teacherMap)
+                    db.collection("users").document(userId).set(teacherMap)
                             .addOnSuccessListener(unused -> {
                                 progressDialog.dismiss();
                                 Toast.makeText(getContext(), "Teacher added successfully", Toast.LENGTH_SHORT).show();
+                                clearFields();
                             })
                             .addOnFailureListener(e -> {
                                 progressDialog.dismiss();
@@ -107,5 +107,14 @@ public class Frag_3AddTeachersFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void clearFields() {
+        etFullName.setText("");
+        etEmail.setText("");
+        etPhone.setText("");
+        etQualifications.setText("");
+        etSpecialization.setText("");
+        etExperience.setText("");
+        etPassword.setText("");
     }
 }
