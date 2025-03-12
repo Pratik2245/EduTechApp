@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Home Fragment -->
+    <item
+        android:id="@+id/homeTeacher"
+        android:icon="@drawable/home"
+        android:title="Home" />
+
+    <!-- Video Player Fragment -->
+    <item
+        android:id="@+id/viewCourseDetailsTeacher"
+        android:icon="@drawable/playbutton"
+        android:title="View Course Details" />
+
+    <!-- Progress Tracking Fragment -->
+    <item
+        android:id="@+id/manageCourseTeachers"
+        android:icon="@drawable/graphicprogression"
+        android:title="Manage Courses" />
+
+    <!-- Profile Fragment -->
+    <item
+        android:id="@+id/profileTeacher"
+        android:icon="@drawable/profileuser"
+        android:title="Profile" />
+
+</menu>
