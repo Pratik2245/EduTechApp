@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- BaseActivityForScreenShots application theme. -->
     <style name="Base.Theme.JavaCP" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- App primary colors -->
 <!--        <item name="colorPrimary">@color/lavender</item>-->

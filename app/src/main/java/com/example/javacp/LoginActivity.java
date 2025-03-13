@@ -99,7 +99,13 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class); // Replace with your Admin activity
                             startActivity(intent);
                             finish();
-                        } else if (selectedRole.equals("student")) {
+                        } else if (selectedRole.equals("teacher")) {
+                            // Redirect to Student Dashboard
+                            Intent intent = new Intent(LoginActivity.this, TeacherHomeActivity.class); // Replace with your Student activity
+                            startActivity(intent);
+                            finish();
+                        }
+                        else if (selectedRole.equals("student")) {
                             // Redirect to Student Dashboard
                             Intent intent = new Intent(LoginActivity.this, HomeActivityStudents.class); // Replace with your Student activity
                             startActivity(intent);

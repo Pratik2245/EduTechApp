@@ -1,25 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:orientation="vertical"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".TeacherHomeActivity">
-    <!-- Fragment Container for Navigation -->
-    <FrameLayout
-        android:id="@+id/framelayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        <LinearLayout
+            android:id="@+id/main"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorToolbar"
+                app:title="Teacher Home"
+                app:titleTextColor="@color/black"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <!-- Bottom Navigation Bar -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavBarTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/CustomBottomNavStyle"
-        android:background="@color/selectedIconColor"
-        app:menu="@menu/bottom_navigation_bar_teacher" />
-</LinearLayout>
+            <FrameLayout
+                android:id="@+id/framelayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Bottom Navigation Bar -->
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavBarTeacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/CustomBottomNavStyle"
+                android:background="@color/selectedIconColor"
+                app:menu="@menu/bottom_navigation_bar_teacher" />
+        </LinearLayout>
+
+    <!-- Sidebar Navigation -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/SidebarTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/sidebar_edutechapp_teacher"
+        app:headerLayout="@layout/header_sidebar" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
