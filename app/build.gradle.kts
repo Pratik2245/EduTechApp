@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.storage)
     dependencies {
         implementation(libs.appcompat)
         implementation(libs.material)
@@ -52,8 +53,10 @@ dependencies {
         implementation(libs.navigation.fragment)   // Navigation Component for Fragments
         implementation(libs.navigation.ui)         // Navigation UI utilities
         implementation(libs.lifecycle.common)
+        implementation (libs.cloudinary.android)
         testImplementation(libs.junit)
         androidTestImplementation(libs.ext.junit)
+
         androidTestImplementation(libs.espresso.core)
     }
 

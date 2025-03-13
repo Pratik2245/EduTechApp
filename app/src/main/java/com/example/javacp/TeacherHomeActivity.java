@@ -46,10 +46,10 @@ ActivityTeacherHomeBinding binding;
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
-                if (id == R.id.home) {
-                    replaceFragments(new Frag_1HomeFragment());
+                if (id == R.id.homeTeacher) {
+                    replaceFragments(new TeacherFrag_1Home());
                 } else if (id == R.id.profile) {
-                    replaceFragments(new Frag_4ProfileFragment());
+                    replaceFragments(new TeacherFrag_2Profile());
                 } else if (id == R.id.logout) {
                     FirebaseAuth.getInstance().signOut();
                     Toast.makeText(TeacherHomeActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
@@ -57,12 +57,11 @@ ActivityTeacherHomeBinding binding;
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
-                } else if (id == R.id.addCourses) {
-                    replaceFragments(new Frag_3AddTeachersFragment());
-                }else if (id == R.id.coursesList) {
-                    replaceFragments(new Frag_2CoursesFragment());
-                }else if (id == R.id.rating) {
-                    // Redirect to Play Store for rating the app
+                } else if (id == R.id.ViewCourseDetailsTeacher) {
+                    replaceFragments(new TeacherFrag_4ViewCourseDetails());
+                } else if (id==R.id.ManageCourses) {
+                    replaceFragments(new TeacherFrag_3ManageCourses());
+                } else if (id == R.id.rating) {
                     String appPackageName = getPackageName();
                     try {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));

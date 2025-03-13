@@ -4,19 +4,22 @@
     <group android:checkableBehavior="single">
         <item android:title="Pages">
             <menu>
-                <item android:id="@+id/home"
+                <item android:id="@+id/homeTeacher"
                     android:icon="@drawable/home"
                     android:title="Home"/>
-                <item android:id="@+id/ViewCourseDetails"
+                <item android:id="@+id/ViewCourseDetailsTeacher"
                     android:icon="@drawable/catalogue"
-                    android:title="Courses" />
+                    android:title="Course Details" />
+                <item android:id="@+id/ManageCourses"
+                    android:icon="@drawable/catalogue"
+                    android:title="Manage Course" />
             </menu>
         </item>
     </group>
     <group android:checkableBehavior="single">
         <item  android:title="Profile">
             <menu>
-                <item android:id="@+id/profile"
+                <item android:id="@+id/profileTeacher"
                     android:icon="@drawable/profileuser"
                     android:title="Profile"/>
                 <item android:id="@+id/logout"
