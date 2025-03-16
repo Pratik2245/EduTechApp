@@ -55,6 +55,8 @@ dependencies {
         implementation(libs.lifecycle.common)
         implementation (libs.cloudinary.android)
         testImplementation(libs.junit)
+        implementation (libs.glide) // Latest version
+        annotationProcessor (libs.compiler)
         androidTestImplementation(libs.ext.junit)
 
         androidTestImplementation(libs.espresso.core)

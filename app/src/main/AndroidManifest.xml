@@ -4,33 +4,31 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
-
     <application
+        android:name=".BaseActivityForScreenShots"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".BaseActivityForScreenShots"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JavaCP"
         tools:targetApi="31">
         <activity
+            android:name=".TeacherManageCourseActivity"
+            android:exported="false" />
+        <activity
             android:name=".TeacherHomeActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".AdminHomeActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"
-            >
-
-        </activity>
+            android:windowSoftInputMode="adjustNothing"></activity>
         <activity
             android:name=".HomeActivityStudents"
             android:exported="false" />
@@ -45,14 +43,10 @@
         </activity>
         <activity
             android:name=".SplashScreenActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

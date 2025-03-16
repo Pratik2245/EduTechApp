@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@android:color/white"
     tools:context=".TeacherFrag_1Home">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <!-- Title Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload New Course"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:paddingBottom="12dp"/>
 
-        <!-- Scrollable Course Upload Form -->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:padding="16dp">
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -24,90 +35,121 @@
                 android:orientation="vertical">
 
                 <!-- Course Title -->
-                <EditText
-                    android:id="@+id/etCourseTitle"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Course Title"
-                    android:inputType="text" />
+                    app:boxStrokeColor="@color/teal_700"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCourseTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Course Title"
+                        android:textColorHint="@color/black"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Course Description -->
-                <EditText
-                    android:id="@+id/etCourseDescription"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Course Description"
                     android:layout_marginTop="10dp"
-                    android:minHeight="100dp"
-                    android:gravity="top"
-                    android:background="@android:drawable/editbox_background" />
+                    app:boxStrokeColor="@color/teal_700">
 
-                <!-- Course Thumbnail (Image Picker) -->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCourseDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Course Description"
+                        android:minHeight="100dp"
+                        android:gravity="top"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Course Thumbnail -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Upload Course Thumbnail"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"/>
 
-                <ImageView
-                    android:id="@+id/ivCourseThumbnail"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    android:background="@android:color/darker_gray"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
 
-                <Button
+                    <ImageView
+                        android:id="@+id/ivCourseThumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:background="@android:color/darker_gray"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnPickThumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Choose Image"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="8dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
-                <!-- Course Video (Video Picker) -->
+                <!-- Course Video -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Upload Course Video"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"/>
 
-                <VideoView
-                    android:id="@+id/vvCourseVideo"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
 
-                <Button
+                    <VideoView
+                        android:id="@+id/vvCourseVideo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnPickVideo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Choose Video"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="8dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
                 <!-- Course Price -->
-                <EditText
-                    android:id="@+id/etCoursePrice"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Course Price (₹)"
                     android:layout_marginTop="10dp"
-                    android:inputType="numberDecimal" />
+                    app:boxStrokeColor="@color/teal_700">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCoursePrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Course Price (₹)"
+                        android:inputType="numberDecimal"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Upload Button -->
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnUploadCourse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Upload Course"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    style="@style/Widget.MaterialComponents.Button"/>
             </LinearLayout>
         </ScrollView>
-
-        <!-- Bottom Navigation Bar -->
-
     </LinearLayout>
-
 </FrameLayout>

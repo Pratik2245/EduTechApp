@@ -8,7 +8,7 @@
       android:icon="@drawable/catalogue"/>
     <item android:id="@+id/addCourse"
       android:title="Add Teachers"
-      android:icon="@drawable/plus22"/>
+      android:icon="@drawable/placeholder"/>
     <item android:id="@+id/profile"
       android:title="Profile"
       android:icon="@drawable/user123"/>

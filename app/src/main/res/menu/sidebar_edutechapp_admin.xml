@@ -9,7 +9,7 @@
           android:title="Home"/>
 
       <item android:id="@+id/addCourses"
-          android:icon="@drawable/plus22"
+          android:icon="@drawable/placeholder"
           android:title="Add Teachers" />
         <item android:id="@+id/coursesList"
             android:icon="@drawable/catalogue"
