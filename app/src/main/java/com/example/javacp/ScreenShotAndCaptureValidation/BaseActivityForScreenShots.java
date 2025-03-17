@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.ScreenShotAndCaptureValidation;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

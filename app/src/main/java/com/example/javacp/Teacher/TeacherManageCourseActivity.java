@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.Teacher;
 
 
 import android.media.MediaPlayer;
@@ -14,6 +14,7 @@ import android.widget.VideoView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
+import com.example.javacp.R;
 import com.example.javacp.model.CoursesModelTeacher;
 
 

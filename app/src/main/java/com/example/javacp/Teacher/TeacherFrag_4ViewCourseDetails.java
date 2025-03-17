@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.Teacher;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.javacp.Adapter.CourseAdapterTeacher;
+import com.example.javacp.R;
 import com.example.javacp.model.CoursesModelTeacher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;

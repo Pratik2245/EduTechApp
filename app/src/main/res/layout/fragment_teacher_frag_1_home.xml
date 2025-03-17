@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:background="@android:color/white"
-    tools:context=".TeacherFrag_1Home">
+    tools:context=".Teacher.TeacherFrag_1Home">
 
     <LinearLayout
         android:layout_width="match_parent"

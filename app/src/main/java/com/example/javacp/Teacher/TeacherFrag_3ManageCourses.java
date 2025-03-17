@@ -1,4 +1,5 @@
-package com.example.javacp;
+
+package com.example.javacp.Teacher;
 
 import android.os.Bundle;
 
@@ -8,15 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.javacp.R;
 
-public class Frag_2CoursesFragment extends Fragment {
 
+public class TeacherFrag_3ManageCourses extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_frag_2_courses, container, false);
+        return inflater.inflate(R.layout.fragment_teacher_frag_3_manage_courses, container, false);
     }
 }

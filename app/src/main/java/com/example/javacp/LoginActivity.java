@@ -16,6 +16,9 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.javacp.Admin.AdminHomeActivity;
+import com.example.javacp.Student.HomeActivityStudents;
+import com.example.javacp.Teacher.TeacherHomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

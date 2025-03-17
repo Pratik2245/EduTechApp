@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.Student;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.javacp.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link StudentFrag_3SubscribedVideos#newInstance} factory method to
+ * Use the {@link StudentFrag_4CourseProgress#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentFrag_3SubscribedVideos extends Fragment {
+public class StudentFrag_4CourseProgress extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class StudentFrag_3SubscribedVideos extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public StudentFrag_3SubscribedVideos() {
+    public StudentFrag_4CourseProgress() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class StudentFrag_3SubscribedVideos extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentFrag_3SubscribedVideos.
+     * @return A new instance of fragment StudentFrag_4CourseProgress.
      */
     // TODO: Rename and change types and number of parameters
-    public static StudentFrag_3SubscribedVideos newInstance(String param1, String param2) {
-        StudentFrag_3SubscribedVideos fragment = new StudentFrag_3SubscribedVideos();
+    public static StudentFrag_4CourseProgress newInstance(String param1, String param2) {
+        StudentFrag_4CourseProgress fragment = new StudentFrag_4CourseProgress();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class StudentFrag_3SubscribedVideos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_frag_3_subscribed_videos, container, false);
+        return inflater.inflate(R.layout.fragment_student_frag_4_course_progress, container, false);
     }
 }

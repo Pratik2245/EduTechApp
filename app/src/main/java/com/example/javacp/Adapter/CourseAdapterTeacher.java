@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +20,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.javacp.R;
-import com.example.javacp.TeacherManageCourseActivity;
+import com.example.javacp.Teacher.TeacherManageCourseActivity;
 import com.example.javacp.model.CoursesModelTeacher;
 
 import java.util.List;

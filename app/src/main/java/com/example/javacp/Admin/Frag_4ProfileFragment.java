@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.Admin;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.example.javacp.databinding.FragmentFrag4ProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.Teacher;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.Student;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -15,8 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.javacp.LoginActivity;
+import com.example.javacp.R;
 import com.example.javacp.databinding.ActivityHomeActiviyStudentsBinding;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 

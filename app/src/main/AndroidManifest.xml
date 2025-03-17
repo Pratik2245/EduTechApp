@@ -9,7 +9,7 @@
         android:maxSdkVersion="32" />
 
     <application
-        android:name=".BaseActivityForScreenShots"
+        android:name=".ScreenShotAndCaptureValidation.BaseActivityForScreenShots"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -20,17 +20,17 @@
         android:theme="@style/Theme.JavaCP"
         tools:targetApi="31">
         <activity
-            android:name=".TeacherManageCourseActivity"
+            android:name=".Teacher.TeacherManageCourseActivity"
             android:exported="false" />
         <activity
-            android:name=".TeacherHomeActivity"
+            android:name=".Teacher.TeacherHomeActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".AdminHomeActivity"
+            android:name=".Admin.AdminHomeActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustNothing"></activity>
         <activity
-            android:name=".HomeActivityStudents"
+            android:name=".Student.HomeActivityStudents"
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"

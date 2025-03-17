@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.Teacher;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,14 +10,13 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.javacp.LoginActivity;
+import com.example.javacp.R;
 import com.example.javacp.databinding.ActivityTeacherHomeBinding;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;

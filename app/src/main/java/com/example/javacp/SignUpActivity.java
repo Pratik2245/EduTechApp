@@ -12,16 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.javacp.Admin.AdminHomeActivity;
+import com.example.javacp.Student.HomeActivityStudents;
+import com.example.javacp.Teacher.TeacherHomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -172,7 +169,7 @@ public class SignUpActivity extends AppCompatActivity {
                 } else if ("student".equals(role)){
                     intent = new Intent(SignUpActivity.this, HomeActivityStudents.class);
                 }else {
-                    intent=new Intent(SignUpActivity.this,TeacherHomeActivity.class);
+                    intent=new Intent(SignUpActivity.this, TeacherHomeActivity.class);
                 }
                 startActivity(intent);
                 finish();

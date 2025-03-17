@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.Teacher;
 
 import android.os.Bundle;
 
@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.example.javacp.databinding.FragmentTeacherFrag2ProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
