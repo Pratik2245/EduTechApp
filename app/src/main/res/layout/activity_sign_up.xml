@@ -10,7 +10,7 @@
     android:layout_height="match_parent"
     android:padding="30dp"
     android:background="@color/backgroundColor"
-    tools:context=".SignUpActivity">
+    tools:context=".Common.SignUpActivity">
 
     <ImageView
         android:layout_width="wrap_content"

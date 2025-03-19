@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.Common;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -15,6 +15,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.javacp.Admin.AdminHomeActivity;
+import com.example.javacp.R;
 import com.example.javacp.Student.HomeActivityStudents;
 import com.example.javacp.Teacher.TeacherHomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,6 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
+
         String userEmail = email.getText().toString().trim();
         String userPassword = password.getText().toString().trim();
         String userFullName = fullName.getText().toString().trim();
@@ -160,6 +162,10 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void redirectToDashboard(String userId) {
+        ProgressDialog loader = new ProgressDialog(this);
+        loader.setMessage("Identifying user...");
+        loader.setCancelable(false);
+        loader.show();
         db.collection("users").document(userId).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 String role = documentSnapshot.getString("role");
@@ -171,10 +177,12 @@ public class SignUpActivity extends AppCompatActivity {
                 }else {
                     intent=new Intent(SignUpActivity.this, TeacherHomeActivity.class);
                 }
+                loader.dismiss();
                 startActivity(intent);
                 finish();
             }
         }).addOnFailureListener(e -> {
+            loader.dismiss();
             Toast.makeText(this, "Error retrieving user data.", Toast.LENGTH_SHORT).show();
             hideProgress();
         });

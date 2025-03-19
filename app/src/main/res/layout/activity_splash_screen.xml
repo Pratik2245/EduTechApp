@@ -6,10 +6,11 @@
     android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreenActivity">
+    tools:context=".Common.SplashScreenActivity">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo1" />
+        android:background="#FFE400"
+        android:src="@drawable/splashscreendesign" />
 
 </LinearLayout>

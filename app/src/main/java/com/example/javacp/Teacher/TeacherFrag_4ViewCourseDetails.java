@@ -48,6 +48,7 @@ public class TeacherFrag_4ViewCourseDetails extends Fragment {
         return view;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void loadTeacherCourses() {
         String teacherUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 

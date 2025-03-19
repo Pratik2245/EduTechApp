@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.javacp.LoginActivity;
+import com.example.javacp.Common.LoginActivity;
 import com.example.javacp.R;
 import com.example.javacp.databinding.ActivityHomeActiviyStudentsBinding;
 import com.google.android.material.navigation.NavigationView;

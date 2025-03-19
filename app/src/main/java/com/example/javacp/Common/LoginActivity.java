@@ -1,4 +1,4 @@
-package com.example.javacp;
+package com.example.javacp.Common;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -17,6 +17,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.javacp.Admin.AdminHomeActivity;
+import com.example.javacp.R;
 import com.example.javacp.Student.HomeActivityStudents;
 import com.example.javacp.Teacher.TeacherHomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
