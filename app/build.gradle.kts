@@ -11,6 +11,7 @@ android {
     defaultConfig {
         applicationId = "com.example.javacp"
         minSdk = 24
+        //noinspection OldTargetApi
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -57,6 +58,7 @@ dependencies {
         testImplementation(libs.junit)
         implementation (libs.glide) // Latest version
         annotationProcessor (libs.compiler)
+        implementation ("com.razorpay:checkout:1.6.26")
         androidTestImplementation(libs.ext.junit)
 
         androidTestImplementation(libs.espresso.core)

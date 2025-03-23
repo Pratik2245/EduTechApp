@@ -10,13 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.javacp.Adapter.CourseAdapterStudent;
 import com.example.javacp.R;
 import com.example.javacp.model.CourseModelStudent;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +25,11 @@ public class StudentFrag_1home extends Fragment {
     private CourseAdapterStudent adapter;
     private List<CourseModelStudent> courseList;
     private FirebaseFirestore db;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_student_frag_1home, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_frag_1home, container, false);
         recyclerView = view.findViewById(R.id.rv_courses);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -41,18 +41,22 @@ public class StudentFrag_1home extends Fragment {
         loadCourses();
         return view;
     }
+
     private void loadCourses() {
         db.collection("courses")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    courseList.clear();  // Clear the list before adding new data
+                    courseList.clear();
                     for (DocumentSnapshot document : queryDocumentSnapshots) {
                         String imageUrl = document.getString("thumbnailUrl");
                         String title = document.getString("title");
                         String description = document.getString("description");
                         String price = document.getString("price");
 
-                        // Create a CourseModelStudent object with additional fields
+                        if (price == null || price.isEmpty()) {
+                            price = "0";  // Default price if missing
+                        }
+
                         CourseModelStudent course = new CourseModelStudent(imageUrl, title, description, price);
                         courseList.add(course);
                     }
@@ -60,5 +64,4 @@ public class StudentFrag_1home extends Fragment {
                 })
                 .addOnFailureListener(e -> Log.e("FirestoreError", "Failed to fetch courses", e));
     }
-
 }
