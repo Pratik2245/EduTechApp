@@ -150,7 +150,7 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
 
         db.collection("payments").document(paymentID)
                 .set(paymentData)
-                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Payment details saved", Toast.LENGTH_SHORT).show())
+                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Payment details saved successfully", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to save payment", Toast.LENGTH_SHORT).show());
     }
 
