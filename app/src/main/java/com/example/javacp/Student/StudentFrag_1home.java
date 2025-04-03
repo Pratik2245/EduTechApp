@@ -62,6 +62,6 @@ public class StudentFrag_1home extends Fragment {
                     }
                     adapter.notifyDataSetChanged();
                 })
-                .addOnFailureListener(e -> Log.e("FirestoreError", "Failed to fetch courses", e));
+                .addOnFailureListener(e -> Log.e("FirestoreErrorOccured", "Failed to fetch courses Data", e));
     }
 }
