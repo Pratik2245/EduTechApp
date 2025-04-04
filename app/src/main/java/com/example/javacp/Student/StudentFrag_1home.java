@@ -57,7 +57,18 @@ public class StudentFrag_1home extends Fragment {
                             price = "0";  // Default price if missing
                         }
 
-                        CourseModelStudent course = new CourseModelStudent(imageUrl, title, description, price);
+                        // ✅ Include document ID as courseId
+                        String courseId = document.getId();
+
+                        // ✅ Use constructor that includes courseId
+                        CourseModelStudent course = new CourseModelStudent(
+                                courseId,
+                                imageUrl,
+                                title,
+                                description,
+                                price
+                        );
+
                         courseList.add(course);
                     }
                     adapter.notifyDataSetChanged();

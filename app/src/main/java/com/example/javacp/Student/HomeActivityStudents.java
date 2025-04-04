@@ -3,6 +3,7 @@ package com.example.javacp.Student;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +20,7 @@ import com.example.javacp.R;
 import com.example.javacp.databinding.ActivityHomeActiviyStudentsBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.razorpay.PaymentResultListener;
 
@@ -34,6 +36,7 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
     // Variables to store last payment details
     private static String lastCourseTitle = "";
     private static String lastPaymentAmount = "";
+    private static String lastCourseId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +97,6 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
             } else if (id == R.id.courseDetails) {
                 replaceFragments(new StudentFrag_2CourseDetails());
             } else if (id == R.id.rating) {
-                // Redirect to Play Store for rating the app
                 String appPackageName = getPackageName();
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
@@ -102,7 +104,6 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
             } else if (id == R.id.share) {
-                // Share App Link
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 String shareBody = "Check out this amazing app: https://play.google.com/store/apps/details?id=" + getPackageName();
@@ -110,7 +111,6 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(shareIntent, "Share via"));
             }
-            // Close the navigation drawer
             binding.drawer.closeDrawer(GravityCompat.START);
             return true;
         });
@@ -127,6 +127,7 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
     public void onPaymentSuccess(String razorpayPaymentID) {
         Toast.makeText(this, "Payment Successful! ID: " + razorpayPaymentID, Toast.LENGTH_LONG).show();
         savePaymentDetails(razorpayPaymentID);
+        saveSubscribedCourse();
     }
 
     @Override
@@ -135,7 +136,6 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
     }
 
     private void savePaymentDetails(String paymentID) {
-
         if (currentUserId == null) {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
             return;
@@ -154,8 +154,32 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to save payment", Toast.LENGTH_SHORT).show());
     }
 
-    public static void setLastPaymentDetails(String courseTitle, String amount) {
+    private void saveSubscribedCourse() {
+
+        if (currentUserId == null || lastCourseId == null || lastCourseId.isEmpty()) {
+            Toast.makeText(this, "Cannot subscribe to course. Missing data."+lastCourseId, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Map<String, Object> subscriptionData = new HashMap<>();
+        subscriptionData.put("userId", currentUserId);
+        subscriptionData.put("courseId", lastCourseId);
+        subscriptionData.put("courseTitle", lastCourseTitle);
+        subscriptionData.put("subscribedAt", System.currentTimeMillis());
+
+        db.collection("subscribed_courses")
+                .add(subscriptionData)
+                .addOnSuccessListener(documentReference -> Toast.makeText(this, "Subscribed to course successfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to subscribe course", Toast.LENGTH_SHORT).show());
+    }
+
+    public static void setLastPaymentDetails(String courseTitle, String amount, String courseId) {
         lastCourseTitle = courseTitle;
         lastPaymentAmount = amount;
+        lastCourseId = courseId;
+
+        // Debug logs (you can also use Toasts)
+        android.util.Log.d("PaymentDebug", "courseId: " + courseId + ", courseTitle: " + courseTitle + ", amount: " + amount);
     }
+
 }

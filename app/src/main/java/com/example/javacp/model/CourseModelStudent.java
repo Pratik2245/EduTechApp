@@ -7,6 +7,23 @@ public class CourseModelStudent {
     private String instructor;
     private String price;
 
+    private String courseId;
+
+    public CourseModelStudent(String courseId, String thumbnailUrl, String title, String description, String price) {
+        this.courseId = courseId;
+        this.thumbnailUrl = thumbnailUrl;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+    }
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
     // Constructor
     public CourseModelStudent(String thumbnailUrl, String title, String description, String price) {
         this.thumbnailUrl = thumbnailUrl;

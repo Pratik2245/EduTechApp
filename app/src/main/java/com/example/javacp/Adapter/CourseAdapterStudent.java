@@ -18,7 +18,6 @@ import com.example.javacp.R;
 import com.example.javacp.Student.HomeActivityStudents;
 import com.example.javacp.model.CourseModelStudent;
 import com.razorpay.Checkout;
-import com.razorpay.PaymentResultListener;
 
 import org.json.JSONObject;
 
@@ -44,32 +43,32 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
         CourseModelStudent course = courseList.get(position);
 
-        // Load thumbnail using Glide
         String secureUrl = course.getThumbnailUrl().replace("http://", "https://");
         Glide.with(context)
                 .load(secureUrl)
                 .placeholder(R.drawable.placeholder)
                 .into(holder.courseThumbnail);
 
-        // Set course details
         holder.courseTitle.setText(course.getTitle());
         holder.courseDescription.setText(course.getDescription());
         holder.coursePrice.setText("₹" + course.getPrice());
 
-        // Handle Payment on Click
-        holder.BuyCourse.setOnClickListener(v -> initiatePayment(course));
+        holder.BuyCourse.setOnClickListener(v -> {
+            HomeActivityStudents.setLastPaymentDetails(course.getTitle(), course.getPrice(), course.getCourseId());
+            initiatePayment(course);
+        });
+
     }
 
     private void initiatePayment(CourseModelStudent course) {
         try {
-            int price = Integer.parseInt(course.getPrice());  // Price in Rupees
-            int finalAmount = price * 100;  // Convert to Paisa (Razorpay uses paisa)
+            int price = Integer.parseInt(course.getPrice());
+            int finalAmount = price * 100;
 
-            // Store payment details before payment starts
-            HomeActivityStudents.setLastPaymentDetails(course.getTitle(), course.getPrice());
+            HomeActivityStudents.setLastPaymentDetails(course.getTitle(), course.getPrice(), course.getCourseId());
 
             Checkout checkout = new Checkout();
-            checkout.setKeyID("rzp_test_tpyHJaccSpSIuW"); // Replace with your Razorpay key
+            checkout.setKeyID("rzp_test_tpyHJaccSpSIuW");
 
             JSONObject options = new JSONObject();
             options.put("name", "Your App Name");
@@ -89,7 +88,6 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
             Toast.makeText(context, "Payment Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
-
 
     @Override
     public int getItemCount() {
