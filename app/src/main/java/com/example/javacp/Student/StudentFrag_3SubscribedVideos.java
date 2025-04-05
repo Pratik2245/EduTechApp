@@ -58,7 +58,6 @@ public class StudentFrag_3SubscribedVideos extends Fragment {
     @SuppressLint("NotifyDataSetChanged")
     private void fetchSubscribedCourses() {
         String currentUserId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
-        Toast.makeText(getContext(), currentUserId.toLowerCase(), Toast.LENGTH_SHORT).show();
         db.collection("subscribed_courses")
                 .whereEqualTo("userId", currentUserId)
                 .get()
@@ -66,14 +65,6 @@ public class StudentFrag_3SubscribedVideos extends Fragment {
                     courseList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         SubscribedModelStudent course = doc.toObject(SubscribedModelStudent.class);
-                        Log.d("subscribe collection","hello");
-                        Log.d("SUBSCRIBE_DEBUG", "courseId: " + course.getCourseId());
-                        Log.d("SUBSCRIBE_DEBUG", "courseTitle: " + course.getCourseTitle());
-                        Log.d("SUBSCRIBE_DEBUG", "thumbnailUrl: " + course.getCourseThumbnailUrl());
-                        Log.d("SUBSCRIBE_DEBUG", "videoUrl: " + course.getVideoUrl());
-                        Log.d("SUBSCRIBE_DEBUG", "teacherId: " + course.getTeacherId());
-                        Log.d("SUBSCRIBE_DEBUG", "teacherName: " + course.getTeacherName());
-                        Log.d("SUBSCRIBE_DEBUG", "userId: " + course.getUserId());
                         courseList.add(course);
                     }
                     adapter.notifyDataSetChanged();

@@ -1,78 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:orientation="vertical"
-    android:background="@android:color/white">
+    android:layout_margin="12dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardBackgroundColor="#F8F9FA">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:background="?attr/selectableItemBackground">
 
-        <!-- Course Thumbnail with Rounded Corners -->
+        <!-- Course Thumbnail -->
         <ImageView
             android:id="@+id/ivCourseThumbnail"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="fitCenter"
-            android:background="@android:color/darker_gray"
-            android:adjustViewBounds="true"
-            android:layout_marginBottom="12dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
+            android:contentDescription="Course Thumbnail"
+            android:background="@drawable/rounded_corner"
             android:clipToOutline="true" />
 
-        <!-- Course Title -->
-        <TextView
-            android:id="@+id/tvCourseTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:maxLines="2"
-            android:ellipsize="end" />
-
-        <!-- Course Description -->
-        <TextView
-            android:id="@+id/tvCourseDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:layout_marginTop="4dp" />
-
-        <!-- Course Price with Button -->
+        <!-- Course Info -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="8dp">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/gradient_background">
 
+            <!-- Course Title -->
             <TextView
-                android:id="@+id/tvCoursePrice"
-                android:layout_width="0dp"
+                android:id="@+id/tvCourseTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="16sp"
+                android:text="Course Title"
                 android:textStyle="bold"
-                android:textColor="@android:color/holo_green_dark" />
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:maxLines="2"
+                android:ellipsize="end" />
 
-            <Button
-                android:id="@+id/BuyCourse"
-                android:layout_width="wrap_content"
+            <!-- Course Description -->
+            <TextView
+                android:id="@+id/tvCourseDescription"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Buy!"
+                android:text="Course Description"
                 android:textSize="14sp"
-                android:backgroundTint="@android:color/holo_blue_dark"
-                android:textColor="@android:color/white"
-                android:padding="6dp"
-                android:layout_marginStart="8dp"/>
+                android:textColor="#555555"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:layout_marginTop="6dp" />
+
+            <!-- Price & Button -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvCoursePrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="₹199"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#2E7D32" />
+
+                <Button
+                    android:id="@+id/BuyCourse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buy Now"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="#1976D2"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
