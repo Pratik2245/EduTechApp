@@ -1,66 +1,83 @@
 package com.example.javacp.Student;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.example.javacp.Adapter.SubscribedCourseAdapter;
 import com.example.javacp.R;
+import com.example.javacp.model.SubscribedModelStudent;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StudentFrag_3SubscribedVideos#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class StudentFrag_3SubscribedVideos extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public StudentFrag_3SubscribedVideos() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentFrag_3SubscribedVideos.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StudentFrag_3SubscribedVideos newInstance(String param1, String param2) {
-        StudentFrag_3SubscribedVideos fragment = new StudentFrag_3SubscribedVideos();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    private RecyclerView recyclerView;
+    private SubscribedCourseAdapter adapter;
+    private List<SubscribedModelStudent> courseList;
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_frag_3_subscribed_videos, container, false);
+        View view=inflater.inflate(R.layout.fragment_student_frag_3_subscribed_videos, container, false);
+
+//        Toolbar toolbar = view.findViewById(R.id.toolbarSubscribed);
+//        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+
+        recyclerView = view.findViewById(R.id.recyclerViewSubscribed);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        courseList = new ArrayList<>();
+        adapter = new SubscribedCourseAdapter(getContext(), courseList);
+        recyclerView.setAdapter(adapter);
+
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        fetchSubscribedCourses();
+
+        return view;
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    private void fetchSubscribedCourses() {
+        String currentUserId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+        Toast.makeText(getContext(), currentUserId.toLowerCase(), Toast.LENGTH_SHORT).show();
+        db.collection("subscribed_courses")
+                .whereEqualTo("userId", currentUserId)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    courseList.clear();
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        SubscribedModelStudent course = doc.toObject(SubscribedModelStudent.class);
+                        Log.d("subscribe collection","hello");
+                        Log.d("SUBSCRIBE_DEBUG", "courseId: " + course.getCourseId());
+                        Log.d("SUBSCRIBE_DEBUG", "courseTitle: " + course.getCourseTitle());
+                        Log.d("SUBSCRIBE_DEBUG", "thumbnailUrl: " + course.getCourseThumbnailUrl());
+                        Log.d("SUBSCRIBE_DEBUG", "videoUrl: " + course.getVideoUrl());
+                        Log.d("SUBSCRIBE_DEBUG", "teacherId: " + course.getTeacherId());
+                        Log.d("SUBSCRIBE_DEBUG", "teacherName: " + course.getTeacherName());
+                        Log.d("SUBSCRIBE_DEBUG", "userId: " + course.getUserId());
+                        courseList.add(course);
+                    }
+                    adapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to load courses", Toast.LENGTH_SHORT).show());
     }
 }

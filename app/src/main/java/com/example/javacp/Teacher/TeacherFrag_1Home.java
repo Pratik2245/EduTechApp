@@ -113,7 +113,25 @@ public class TeacherFrag_1Home extends Fragment {
                     @Override
                     public void onSuccess(String requestId, Map resultData) {
                         String videoUrl = resultData.get("url").toString();
-                        saveToFirestore(title, description, price, thumbnailUrl, videoUrl);
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        String teacherUid = auth.getCurrentUser().getUid();
+
+                        FirebaseFirestore.getInstance().collection("users")  // or "teachers"
+                                .document(teacherUid)
+                                .get()
+                                .addOnSuccessListener(documentSnapshot -> {
+                                    if (documentSnapshot.exists()) {
+                                        String teacherName = documentSnapshot.getString("fullName");  // Use your actual field key
+                                        // ✅ Save course with teacher name
+                                        saveToFirestore(title, description, price, thumbnailUrl, videoUrl, teacherName);
+                                    } else {
+                                        Toast.makeText(getContext(), "Teacher info not found", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(getContext(), "Failed to fetch teacher name: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+
                     }
 
                     @Override
@@ -161,7 +179,7 @@ public class TeacherFrag_1Home extends Fragment {
     }
 
 
-    private void saveToFirestore(String title, String description, String price, String thumbnailUrl, String videoUrl) {
+    private void saveToFirestore(String title, String description, String price, String thumbnailUrl, String videoUrl,String teacherName) {
         String teacherUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Map<String, Object> course = new HashMap<>();
         course.put("title", title);
@@ -170,6 +188,7 @@ public class TeacherFrag_1Home extends Fragment {
         course.put("thumbnailUrl", thumbnailUrl);
         course.put("videoUrl", videoUrl);
         course.put("teacherUid", teacherUid);
+        course.put("teacherName",teacherName);
         course.put("timestamp", System.currentTimeMillis());
 
         firestore.collection("courses")

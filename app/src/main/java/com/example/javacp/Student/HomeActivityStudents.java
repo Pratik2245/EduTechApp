@@ -34,6 +34,11 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
     private String currentUserId;
 
     // Variables to store last payment details
+    private static String lastThumbnailUrl = "";
+    private static String lastVideoUrl = "";
+    private static String lastTeacherId = "";
+    private static String lastTeacherName = "";
+
     private static String lastCourseTitle = "";
     private static String lastPaymentAmount = "";
     private static String lastCourseId = "";
@@ -155,31 +160,42 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
     }
 
     private void saveSubscribedCourse() {
-
         if (currentUserId == null || lastCourseId == null || lastCourseId.isEmpty()) {
-            Toast.makeText(this, "Cannot subscribe to course. Missing data."+lastCourseId, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cannot subscribe to course. Missing data: " + lastCourseId, Toast.LENGTH_SHORT).show();
             return;
         }
+
 
         Map<String, Object> subscriptionData = new HashMap<>();
         subscriptionData.put("userId", currentUserId);
         subscriptionData.put("courseId", lastCourseId);
         subscriptionData.put("courseTitle", lastCourseTitle);
+        subscriptionData.put("thumbnailUrl", lastThumbnailUrl);
+        subscriptionData.put("videoUrl", lastVideoUrl);
+        subscriptionData.put("teacherId", lastTeacherId);
+        subscriptionData.put("teacherName", lastTeacherName);
         subscriptionData.put("subscribedAt", System.currentTimeMillis());
 
         db.collection("subscribed_courses")
                 .add(subscriptionData)
-                .addOnSuccessListener(documentReference -> Toast.makeText(this, "Subscribed to course successfully", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(this, "Failed to subscribe course", Toast.LENGTH_SHORT).show());
+                .addOnSuccessListener(documentReference ->
+                        Toast.makeText(this, "Subscribed to course successfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Failed to subscribe course: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
-    public static void setLastPaymentDetails(String courseTitle, String amount, String courseId) {
+
+
+    public static void setLastPaymentDetails(String courseTitle, String amount, String courseId,
+                                             String thumbnailUrl, String videoUrl, String teacherId, String teacherName) {
         lastCourseTitle = courseTitle;
         lastPaymentAmount = amount;
         lastCourseId = courseId;
-
-        // Debug logs (you can also use Toasts)
-        android.util.Log.d("PaymentDebug", "courseId: " + courseId + ", courseTitle: " + courseTitle + ", amount: " + amount);
+        lastThumbnailUrl = thumbnailUrl;
+        lastVideoUrl = videoUrl;
+        lastTeacherId = teacherId;
+        lastTeacherName = teacherName;
     }
+
 
 }

@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Student.StudentFrag_3SubscribedVideos">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="Subscribed Vedios Fragment"
-    android:textSize="40dp"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarSubscribed"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:title="Subscribed Courses"
+        android:titleTextColor="@android:color/black"
+        android:elevation="4dp" />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSubscribed"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

@@ -52,21 +52,27 @@ public class StudentFrag_1home extends Fragment {
                         String title = document.getString("title");
                         String description = document.getString("description");
                         String price = document.getString("price");
+                        String videoUrl = document.getString("videoUrl");
+                        String teacherId = document.getString("teacherUid");
+                        String teacherName = document.getString("teacherName");
 
                         if (price == null || price.isEmpty()) {
-                            price = "0";  // Default price if missing
+                            price = "0";
                         }
 
-                        // ✅ Include document ID as courseId
                         String courseId = document.getId();
 
-                        // ✅ Use constructor that includes courseId
+                        Log.d("COURSE_FETCH", "Course Data: " + title + ", " + imageUrl + ", " + videoUrl + ", " + teacherName);
+
                         CourseModelStudent course = new CourseModelStudent(
                                 courseId,
                                 imageUrl,
                                 title,
                                 description,
-                                price
+                                price,
+                                videoUrl,
+                                teacherId,
+                                teacherName
                         );
 
                         courseList.add(course);
@@ -75,4 +81,5 @@ public class StudentFrag_1home extends Fragment {
                 })
                 .addOnFailureListener(e -> Log.e("FirestoreErrorOccured", "Failed to fetch courses Data", e));
     }
+
 }

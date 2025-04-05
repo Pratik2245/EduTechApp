@@ -2,6 +2,7 @@ package com.example.javacp.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,9 +53,16 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
         holder.courseTitle.setText(course.getTitle());
         holder.courseDescription.setText(course.getDescription());
         holder.coursePrice.setText("₹" + course.getPrice());
-
         holder.BuyCourse.setOnClickListener(v -> {
-            HomeActivityStudents.setLastPaymentDetails(course.getTitle(), course.getPrice(), course.getCourseId());
+            HomeActivityStudents.setLastPaymentDetails(
+                    course.getTitle(),
+                    course.getPrice(),
+                    course.getCourseId(),
+                    course.getThumbnailUrl(),
+                    course.getVideoUrl(),
+                    course.getTeacherId(),
+                    course.getTeacherName()
+            );
             initiatePayment(course);
         });
 
@@ -65,7 +73,7 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
             int price = Integer.parseInt(course.getPrice());
             int finalAmount = price * 100;
 
-            HomeActivityStudents.setLastPaymentDetails(course.getTitle(), course.getPrice(), course.getCourseId());
+            HomeActivityStudents.setLastPaymentDetails(course.getTitle(), course.getPrice(), course.getCourseId(),course.getThumbnailUrl(),course.getVideoUrl(),course.getTeacherId(),course.getTeacherName());
 
             Checkout checkout = new Checkout();
             checkout.setKeyID("rzp_test_tpyHJaccSpSIuW");
