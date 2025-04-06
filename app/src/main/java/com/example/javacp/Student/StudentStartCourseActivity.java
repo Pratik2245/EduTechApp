@@ -3,6 +3,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -138,7 +139,7 @@ public class StudentStartCourseActivity extends AppCompatActivity {
                 .document(studentId + "_" + courseTitle)
                 .set(progressData)
                 .addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "Progress Stored Successfully", Toast.LENGTH_SHORT).show();
+                    Log.d("progress", "Progress Stored Successfully");
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Error in storing the progress", Toast.LENGTH_SHORT).show();

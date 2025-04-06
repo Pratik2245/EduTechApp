@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.example.javacp.R;
 import com.example.javacp.Student.HomeActivityStudents;
 import com.example.javacp.model.CourseModelStudent;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.razorpay.Checkout;
 
 import org.json.JSONObject;
@@ -54,17 +56,34 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
         holder.courseDescription.setText(course.getDescription());
         holder.coursePrice.setText("₹" + course.getPrice());
         holder.BuyCourse.setOnClickListener(v -> {
-            HomeActivityStudents.setLastPaymentDetails(
-                    course.getTitle(),
-                    course.getPrice(),
-                    course.getCourseId(),
-                    course.getThumbnailUrl(),
-                    course.getVideoUrl(),
-                    course.getTeacherId(),
-                    course.getTeacherName()
-            );
-            initiatePayment(course);
+            String studentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String documentId = studentId + "_" + course.getTitle();
+
+            FirebaseFirestore.getInstance()
+                    .collection("subscribed_courses")
+                    .document(documentId)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            Toast.makeText(context, "You have already purchased this course.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            HomeActivityStudents.setLastPaymentDetails(
+                                    course.getTitle(),
+                                    course.getPrice(),
+                                    course.getCourseId(),
+                                    course.getThumbnailUrl(),
+                                    course.getVideoUrl(),
+                                    course.getTeacherId(),
+                                    course.getTeacherName()
+                            );
+                            initiatePayment(course);
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(context, "Failed to check course status. Please try again.", Toast.LENGTH_SHORT).show();
+                    });
         });
+
 
     }
 

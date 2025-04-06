@@ -1,31 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Student.StudentStartCourseActivity"
-    android:background="@android:color/black">
+
+    android:layout_height="match_parent">
 
     <com.google.android.exoplayer2.ui.StyledPlayerView
         android:id="@+id/playerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:use_controller="true"
-        app:show_timeout="3000"
-        app:resize_mode="fit"
-        app:show_buffering="when_playing"
-        app:player_layout_id="@layout/exo_styled_player_view"
-        app:controller_layout_id="@layout/exo_styled_player_control_view"/>
+        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <!-- Add your course info/content here -->
 
     <ImageButton
         android:id="@+id/btnFullscreen"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_fullscreen"
-        android:contentDescription="Toggle fullscreen"/>
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintTop_toTopOf="@id/playerView"
+        app:layout_constraintEnd_toEndOf="@id/playerView"
+        android:layout_margin="8dp"/>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
