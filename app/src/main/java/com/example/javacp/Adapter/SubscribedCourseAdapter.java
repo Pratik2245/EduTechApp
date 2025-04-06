@@ -76,6 +76,12 @@ public class SubscribedCourseAdapter extends RecyclerView.Adapter<SubscribedCour
             Intent i=new Intent(context, StudentStartCourseActivity.class);
             i.putExtra("videoUrl",course.getVideoUrl());
             i.putExtra("courseTitle",course.getCourseTitle());
+            i.putExtra("thumbnail",course.getCourseThumbnailUrl());
+            i.putExtra("teacherName",course.getTeacherName());
+            i.putExtra("teacherId",course.getTeacherId());
+
+
+
             context.startActivity(i);
         });
     }

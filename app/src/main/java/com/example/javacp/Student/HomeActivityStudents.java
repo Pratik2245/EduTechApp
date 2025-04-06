@@ -69,8 +69,6 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
             int selectedId = menuItem.getItemId();
             if (selectedId == R.id.nav_home) {
                 replaceFragments(new StudentFrag_1home());
-            } else if (selectedId == R.id.nav_course_details) {
-                replaceFragments(new StudentFrag_2CourseDetails());
             } else if (selectedId == R.id.nav_video_player) {
                 replaceFragments(new StudentFrag_3SubscribedVideos());
             } else if (selectedId == R.id.nav_progress) {
@@ -99,9 +97,7 @@ public class HomeActivityStudents extends AppCompatActivity implements PaymentRe
                 finish();
             } else if (id == R.id.coursesProgress) {
                 replaceFragments(new StudentFrag_4CourseProgress());
-            } else if (id == R.id.courseDetails) {
-                replaceFragments(new StudentFrag_2CourseDetails());
-            } else if (id == R.id.rating) {
+            }else if (id == R.id.rating) {
                 String appPackageName = getPackageName();
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));

@@ -13,9 +13,6 @@
                 <item android:id="@+id/coursesProgress"
                     android:icon="@drawable/graphicprogression"
                     android:title="Course Progress" />
-                <item android:id="@+id/courseDetails"
-                    android:icon="@drawable/books"
-                    android:title="Course Details" />
             </menu>
         </item>
     </group>

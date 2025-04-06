@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,31 +16,44 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.ui.StyledPlayerView;
 
 import com.example.javacp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class StudentStartCourseActivity extends AppCompatActivity {
     private StyledPlayerView playerView;
     private ExoPlayer player;
     private ImageButton btnFullscreen;
     private boolean isFullscreen = false;
+
+    // Add these:
+    private String videoUrl, courseTitle, thumbnail, teacherName, teacherId, studentId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_student_start_course);
 
-        // Initialize views
         playerView = findViewById(R.id.playerView);
         btnFullscreen = findViewById(R.id.btnFullscreen);
 
-        // Initialize ExoPlayer
         player = new ExoPlayer.Builder(this).build();
         playerView.setPlayer(player);
 
-        // Set up fullscreen toggle
         btnFullscreen.setOnClickListener(v -> toggleFullscreen());
 
-        // Get video URL from intent
-        String videoUrl = getIntent().getStringExtra("videoUrl");
+        // Get data from intent
+        videoUrl = getIntent().getStringExtra("videoUrl");
+        courseTitle = getIntent().getStringExtra("courseTitle");
+        thumbnail = getIntent().getStringExtra("thumbnail");
+        teacherName = getIntent().getStringExtra("teacherName");
+        teacherId = getIntent().getStringExtra("teacherId");
+        studentId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+
         if (videoUrl != null) {
             MediaItem mediaItem = MediaItem.fromUri(Uri.parse(videoUrl));
             player.setMediaItem(mediaItem);
@@ -47,7 +61,6 @@ public class StudentStartCourseActivity extends AppCompatActivity {
             player.play();
         }
 
-        // Handle player state
         player.addListener(new Player.Listener() {
             @Override
             public void onPlaybackStateChanged(int playbackState) {
@@ -84,18 +97,52 @@ public class StudentStartCourseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        saveProgressToFirestore();
         player.pause();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        saveProgressToFirestore();
+        player.release();
+    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         player.play();
     }
+    private void saveProgressToFirestore() {
+        if (player == null || player.getDuration() <= 0) return;
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        player.release();
+        long position = player.getCurrentPosition();
+        long duration = player.getDuration();
+        float progressPercent = (position * 100f) / duration;
+
+        Map<String, Object> progressData = new HashMap<>();
+        progressData.put("studentId", studentId);
+        progressData.put("teacherId", teacherId);
+        progressData.put("teacherName", teacherName);
+        progressData.put("courseTitle", courseTitle);
+        progressData.put("thumbnail", thumbnail);
+        progressData.put("videoUrl", videoUrl);
+        progressData.put("watchedDuration", position);
+        progressData.put("totalDuration", duration);
+        progressData.put("progressPercent", progressPercent);
+        progressData.put("lastUpdated", FieldValue.serverTimestamp());
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("course_progress")
+                .document(studentId + "_" + courseTitle)
+                .set(progressData)
+                .addOnSuccessListener(unused -> {
+                    Toast.makeText(this, "Progress Stored Successfully", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error in storing the progress", Toast.LENGTH_SHORT).show();
+                });
     }
+
 }

@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
+            android:padding="4dp"
             android:src="@drawable/ic_launcher_background"
             android:contentDescription="Course Thumbnail"
             android:background="@drawable/rounded_corner"
