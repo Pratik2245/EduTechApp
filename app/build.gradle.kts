@@ -60,6 +60,7 @@ dependencies {
         annotationProcessor (libs.compiler)
         implementation ("com.razorpay:checkout:1.6.26")
         androidTestImplementation(libs.ext.junit)
+        implementation("com.google.android.exoplayer:exoplayer:2.19.1")
 
         androidTestImplementation(libs.espresso.core)
     }

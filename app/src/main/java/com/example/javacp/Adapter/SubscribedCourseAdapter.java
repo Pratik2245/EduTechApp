@@ -3,6 +3,7 @@ package com.example.javacp.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.javacp.R;
+import com.example.javacp.Student.StudentStartCourseActivity;
 import com.example.javacp.model.SubscribedModelStudent;
+import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +37,7 @@ public class SubscribedCourseAdapter extends RecyclerView.Adapter<SubscribedCour
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageCourseThumbnail;
         TextView textCourseTitle, textTeacherName, textSubscribedAt;
+        MaterialButton buttonStartCourse;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -41,6 +45,7 @@ public class SubscribedCourseAdapter extends RecyclerView.Adapter<SubscribedCour
             textCourseTitle = itemView.findViewById(R.id.textCourseTitle);
             textTeacherName = itemView.findViewById(R.id.textTeacherName);
             textSubscribedAt = itemView.findViewById(R.id.textSubscribedAt);
+            buttonStartCourse = itemView.findViewById(R.id.buttonStartCourse);
         }
     }
 
@@ -67,6 +72,12 @@ public class SubscribedCourseAdapter extends RecyclerView.Adapter<SubscribedCour
         Glide.with(context)
                 .load(secureUrl)  // or getCourseThumbnailUrl() if using annotation
                 .into(holder.imageCourseThumbnail);
+        holder.buttonStartCourse.setOnClickListener(v -> {
+            Intent i=new Intent(context, StudentStartCourseActivity.class);
+            i.putExtra("videoUrl",course.getVideoUrl());
+            i.putExtra("courseTitle",course.getCourseTitle());
+            context.startActivity(i);
+        });
     }
 
     @Override
