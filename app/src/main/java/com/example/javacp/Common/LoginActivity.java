@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
-                        Log.d("Login", "Success: " + user.getEmail());
+//                        Log.d("Login", "Success: " + user.getEmail());
 
                         // Check the role and redirect accordingly
                         if (selectedRole.equals("admin")) {
