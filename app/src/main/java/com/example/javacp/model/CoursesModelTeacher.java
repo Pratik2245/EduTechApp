@@ -1,7 +1,9 @@
 package com.example.javacp.model;
 
 public class CoursesModelTeacher {
-    private String title, description, price, thumbnailUrl, videoUrl, teacherUid,teacherName;
+    private String title, description, price, thumbnailUrl, videoUrl,teacherName;
+    private String teacherId;
+    private String courseId;
 
     public CoursesModelTeacher() {} // Required for Firestore
 
@@ -11,8 +13,23 @@ public class CoursesModelTeacher {
         this.price = price;
         this.thumbnailUrl = thumbnailUrl;
         this.videoUrl = videoUrl;
-        this.teacherUid = teacherUid;
+        this.teacherId = teacherUid;
         this.teacherName = teacherName;
+    }
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
     public String getTitle() { return title; }

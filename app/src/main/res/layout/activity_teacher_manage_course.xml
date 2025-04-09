@@ -53,6 +53,14 @@
         android:textStyle="bold"
         android:paddingTop="10dp"
         android:layout_below="@id/videoView"/>
+    <EditText
+        android:id="@+id/etCourseTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/tvCourseTitle"/>
 
     <!-- Course Description -->
     <TextView
@@ -62,7 +70,14 @@
         android:text="Course Description"
         android:textSize="16sp"
         android:paddingTop="5dp"
-        android:layout_below="@id/tvCourseTitle"/>
+        android:layout_below="@id/etCourseTitle"/>
+    <EditText
+        android:id="@+id/etCourseDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Description"
+        android:textSize="20sp"
+        android:layout_below="@id/tvCourseDescription"/>
 
     <!-- Course Price -->
     <TextView
@@ -73,8 +88,15 @@
         android:textSize="18sp"
         android:textColor="@android:color/holo_green_dark"
         android:paddingTop="5dp"
-        android:layout_below="@id/tvCourseDescription"/>
-
+        android:layout_below="@id/etCourseDescription"/>
+    <EditText
+        android:id="@+id/etCoursePrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="₹ Price"
+        android:textSize="20sp"
+        android:inputType="number"
+        android:layout_below="@id/tvCoursePrice"/>
     <!-- Enroll Button -->
     <Button
         android:id="@+id/updateCourseData"
@@ -82,7 +104,7 @@
         android:layout_height="wrap_content"
         android:text="Update Course Data"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/tvCoursePrice"
+        android:layout_below="@id/etCoursePrice"
         android:backgroundTint="@android:color/holo_blue_dark"
         android:textColor="@android:color/white"/>
 </RelativeLayout>

@@ -47,7 +47,6 @@ public class TeacherFrag_4ViewCourseDetails extends Fragment {
         loadTeacherCourses();
         return view;
     }
-
     @SuppressLint("NotifyDataSetChanged")
     private void loadTeacherCourses() {
         String teacherUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -60,6 +59,11 @@ public class TeacherFrag_4ViewCourseDetails extends Fragment {
                         courseList.clear();
                         for (QueryDocumentSnapshot doc : task.getResult()) {
                             CoursesModelTeacher course = doc.toObject(CoursesModelTeacher.class);
+
+                            // ✅ Manually set the Firestore document ID and teacher ID
+                            course.setCourseId(doc.getId()); // set courseId using Firestore document ID
+                            course.setTeacherId(doc.getString("teacherUid")); // set teacherId using Firestore field
+
                             courseList.add(course);
                         }
                         courseAdapterTeacher.notifyDataSetChanged();
@@ -68,4 +72,5 @@ public class TeacherFrag_4ViewCourseDetails extends Fragment {
                     }
                 });
     }
+
 }
