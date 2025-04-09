@@ -26,8 +26,7 @@ import java.util.Map;
 public class Frag_3AddTeachersFragment extends Fragment {
 
     private EditText etFullName, etEmail, etPhone, etQualifications, etSpecialization, etExperience, etPassword;
-    private MaterialButton btnSubmit, btnUploadImage;
-    private ImageView imgProfilePicture;
+    private MaterialButton btnSubmit;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private ProgressDialog progressDialog;
@@ -45,8 +44,6 @@ public class Frag_3AddTeachersFragment extends Fragment {
         etExperience = view.findViewById(R.id.etExperience);
         etPassword = view.findViewById(R.id.etPassword);
         btnSubmit = view.findViewById(R.id.btnSubmit);
-        btnUploadImage = view.findViewById(R.id.btnUploadImage);
-        imgProfilePicture = view.findViewById(R.id.imgProfilePicture);
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
