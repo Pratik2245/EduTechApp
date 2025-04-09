@@ -19,6 +19,7 @@ import com.example.javacp.R;
 import com.example.javacp.Student.HomeActivityStudents;
 import com.example.javacp.model.CourseModelStudent;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.razorpay.Checkout;
 
@@ -27,6 +28,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStudent.CourseViewHolder> {
+
     private Context context;
     private List<CourseModelStudent> courseList;
 
@@ -55,18 +57,30 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
         holder.courseTitle.setText(course.getTitle());
         holder.courseDescription.setText(course.getDescription());
         holder.coursePrice.setText("₹" + course.getPrice());
-        holder.BuyCourse.setOnClickListener(v -> {
-            String studentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            String documentId = studentId + "_" + course.getTitle();
 
-            FirebaseFirestore.getInstance()
-                    .collection("subscribed_courses")
-                    .document(documentId)
+        holder.BuyCourse.setOnClickListener(v -> {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            String currentUserId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
+
+            if (currentUserId == null) {
+                Toast.makeText(context, "Please login first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Check if course is already subscribed
+            db.collection("subscribed_courses")
+                    .whereEqualTo("userId", currentUserId)
+                    .whereEqualTo("courseId", course.getCourseId())  // Use your course ID field here
                     .get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            Toast.makeText(context, "You have already purchased this course.", Toast.LENGTH_SHORT).show();
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            // Already subscribed
+                            Toast.makeText(context, "You have already subscribed to this course", Toast.LENGTH_SHORT).show();
                         } else {
+                            // Not subscribed, proceed with payment
+
+                            // Save course info before payment
                             HomeActivityStudents.setLastPaymentDetails(
                                     course.getTitle(),
                                     course.getPrice(),
@@ -76,14 +90,15 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
                                     course.getTeacherId(),
                                     course.getTeacherName()
                             );
-                            initiatePayment(course);
+
+                            // Start Razorpay payment
+                            initiatePayment(course); // Replace with your Razorpay code
                         }
                     })
                     .addOnFailureListener(e -> {
-                        Toast.makeText(context, "Failed to check course status. Please try again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Error checking subscription: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         });
-
 
     }
 
@@ -91,8 +106,6 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
         try {
             int price = Integer.parseInt(course.getPrice());
             int finalAmount = price * 100;
-
-            HomeActivityStudents.setLastPaymentDetails(course.getTitle(), course.getPrice(), course.getCourseId(),course.getThumbnailUrl(),course.getVideoUrl(),course.getTeacherId(),course.getTeacherName());
 
             Checkout checkout = new Checkout();
             checkout.setKeyID("rzp_test_tpyHJaccSpSIuW");
@@ -112,6 +125,7 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
                 Toast.makeText(context, "Payment initiation failed", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
+            Log.e("RAZORPAY_ERROR", "Payment error", e);
             Toast.makeText(context, "Payment Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
