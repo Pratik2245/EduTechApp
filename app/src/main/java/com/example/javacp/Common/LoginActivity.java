@@ -22,6 +22,7 @@ import com.example.javacp.Student.HomeActivityStudents;
 import com.example.javacp.Teacher.TeacherHomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
     TextView signupRedirect;
@@ -85,35 +86,55 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(String email, String password, String selectedRole) {
-        // Show the ProgressDialog before starting login process
         progressDialog.show();
 
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
-                    // Dismiss the ProgressDialog after the login attempt is finished
                     progressDialog.dismiss();
 
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
-//                        Log.d("Login", "Success: " + user.getEmail());
 
-                        // Check the role and redirect accordingly
-                        if (selectedRole.equals("admin")) {
-                            // Redirect to Admin Dashboard
-                            Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class); // Replace with your Admin activity
-                            startActivity(intent);
-                            finish();
-                        } else if (selectedRole.equals("teacher")) {
-                            // Redirect to Student Dashboard
-                            Intent intent = new Intent(LoginActivity.this, TeacherHomeActivity.class); // Replace with your Student activity
-                            startActivity(intent);
-                            finish();
-                        }
-                        else if (selectedRole.equals("student")) {
-                            // Redirect to Student Dashboard
-                            Intent intent = new Intent(LoginActivity.this, HomeActivityStudents.class); // Replace with your Student activity
-                            startActivity(intent);
-                            finish();
+                        if (user != null) {
+                            String uid = user.getUid();
+
+                            // 🔒 Fetch user document from Firestore
+                            FirebaseFirestore.getInstance().collection("users")
+                                    .document(uid)
+                                    .get()
+                                    .addOnSuccessListener(documentSnapshot -> {
+                                        if (documentSnapshot.exists()) {
+                                            String storedRole = documentSnapshot.getString("role");
+
+                                            if (storedRole != null && storedRole.equalsIgnoreCase(selectedRole)) {
+                                                // ✅ Role matches, allow login
+                                                switch (storedRole.toLowerCase()) {
+                                                    case "admin":
+                                                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class));
+                                                        break;
+                                                    case "teacher":
+                                                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(LoginActivity.this, TeacherHomeActivity.class));
+                                                        break;
+                                                    case "student":
+                                                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(LoginActivity.this, HomeActivityStudents.class));
+                                                        break;
+                                                }
+                                                finish();
+                                            } else {
+                                                // ❌ Role mismatch
+                                                Toast.makeText(LoginActivity.this, "Access denied: Incorrect role selected.", Toast.LENGTH_SHORT).show();
+                                                FirebaseAuth.getInstance().signOut(); // Sign out immediately
+                                            }
+                                        } else {
+                                            Toast.makeText(LoginActivity.this, "User data not found", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(LoginActivity.this, "Error fetching user role: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
                         }
                     } else {
                         Log.e("Login", "Failed: " + task.getException().getMessage());
@@ -121,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     // Email Validation
     private boolean isValidEmail(String email) {

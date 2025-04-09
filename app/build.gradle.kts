@@ -7,6 +7,12 @@ plugins {
 android {
     namespace = "com.example.javacp"
     compileSdk = 34
+    packaging {
+        resources {
+            excludes += "/META-INF/NOTICE.md"
+            excludes += "/META-INF/LICENSE.md"
+        }
+    }
 
     defaultConfig {
         applicationId = "com.example.javacp"
@@ -59,6 +65,8 @@ dependencies {
         implementation (libs.glide) // Latest version
         annotationProcessor (libs.compiler)
         implementation ("com.razorpay:checkout:1.6.26")
+        implementation("com.sun.mail:android-mail:1.6.7")
+        implementation ("com.sun.mail:android-activation:1.6.7")
         androidTestImplementation(libs.ext.junit)
         implementation("com.google.android.exoplayer:exoplayer:2.19.1")
 

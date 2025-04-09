@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.javacp.R;
+import com.example.javacp.mail.JavaMailAPI;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -94,6 +95,19 @@ public class Frag_3AddTeachersFragment extends Fragment {
                     db.collection("users").document(userId).set(teacherMap)
                             .addOnSuccessListener(unused -> {
                                 progressDialog.dismiss();
+
+                                String subject = "Welcome to the Teacher Portal";
+                                String message = "Hi " + fullName + ",\n\n" +
+                                        "Your account has been created successfully.\n\n" +
+                                        "Login credentials:\n" +
+                                        "Email: " + email + "\n" +
+                                        "Password: " + password + "\n\n" +
+                                        "Regards,\nAdmin Team";
+
+                                // Calling the JavaMailAPI
+                                JavaMailAPI javaMailAPI = new JavaMailAPI(requireContext(), email, subject, message);
+                                javaMailAPI.execute();
+
                                 Toast.makeText(getContext(), "Teacher added successfully", Toast.LENGTH_SHORT).show();
                                 clearFields();
                             })
