@@ -1,6 +1,7 @@
 package com.example.javacp.Admin;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,7 +15,6 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.javacp.R;
-import com.example.javacp.mail.JavaMailAPI;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -102,8 +102,10 @@ public class Frag_3AddTeachersFragment extends Fragment {
                                         "Regards,\nAdmin Team";
 
                                 // Calling the JavaMailAPI
-                                JavaMailAPI javaMailAPI = new JavaMailAPI(requireContext(), email, subject, message);
-                                javaMailAPI.execute();
+                                if(email.isEmpty()){
+                                    return;
+                                }
+                                sendEmail(subject,message,email);
 
                                 Toast.makeText(getContext(), "Teacher added successfully", Toast.LENGTH_SHORT).show();
                                 clearFields();
@@ -120,6 +122,16 @@ public class Frag_3AddTeachersFragment extends Fragment {
             }
         });
     }
+
+    private void sendEmail(String subject, String message, String email) {
+        Intent i=new Intent(Intent.ACTION_SEND);
+        i.putExtra(Intent.EXTRA_EMAIL,new String[]{email});
+        i.putExtra(Intent.EXTRA_SUBJECT,subject);
+        i.putExtra(Intent.EXTRA_TEXT,message);
+        i.setType("message/rfc822");
+        startActivity(Intent.createChooser(i,"choose an email client: "));
+    }
+
     private void clearFields() {
         etFullName.setText("");
         etEmail.setText("");
