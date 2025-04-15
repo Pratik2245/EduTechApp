@@ -10,7 +10,7 @@
     <color name="colorPrimary">#6200EE</color> <!-- Purple -->
     <color name="colorPrimaryDark">#3700B3</color> <!-- Darker shade of purple -->
     <color name="colorAccent">#03DAC5</color>
-    <color name="colorToolbar">#03DAC5</color>
+    <color name="colorToolbar">#0B3D91</color>
     <color name="bottomNavColor">#0C0C0C</color>
 <!--  //navigation bar colors -->
 
