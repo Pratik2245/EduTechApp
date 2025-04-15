@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.storage)
+    implementation ("com.airbnb.android:lottie:6.1.0")
     dependencies {
         implementation(libs.appcompat)
         implementation(libs.material)

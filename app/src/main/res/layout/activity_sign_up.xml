@@ -12,12 +12,17 @@
     android:background="@color/backgroundColor"
     tools:context=".Common.SignUpActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="140sp"
-        android:src="@drawable/signup"
-        android:layout_marginBottom="30dp"
-        android:gravity="center"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="369dp"
+        android:layout_height="249dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@color/backgroundColor"
+        app:lottie_autoPlay="true"
+        app:lottie_cacheComposition="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/signup"
+        app:lottie_speed="1" />
 
     <!-- Full Name Field -->
     <com.google.android.material.textfield.TextInputLayout
