@@ -1,8 +1,37 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- BaseActivityForScreenShots application theme. -->
-    <style name="Base.Theme.JavaCP" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <item name="android:statusBarColor">@color/colorToolbar</item>
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-    </style>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <!--    <color name="backgroundColor">#F0F4F8</color> &lt;!&ndash; Light background color &ndash;&gt;-->
+    <color name="primaryTextColor">#2C3E50</color> <!-- Dark text color -->
+    <color name="hintTextColor">#BDC3C7</color> <!-- Light gray hint text color -->
+    <color name="teal_700">#16A085</color>
+
+    <color name="backgroundColor">#000000</color> <!-- white -->
+     <!-- black -->
+
+    <!--    <color name="lavender">#8692f7</color>-->
+    <color name="colorPrimary">#6200EE</color> <!-- Purple -->
+    <color name="colorPrimaryDark">#3700B3</color> <!-- Darker shade of purple -->
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorToolbar">#0B3D91</color>
+    <color name="bottomNavColor">#0C0C0C</color>
+    <!--  //navigation bar colors -->
+
+    <color name="selectedIconColor">#3A94E0</color>
+    <color name="defaultIconColor">#F6F6F6</color>
+    <color name="darkTextColor">#020000</color>
+    <color name="dashboard_subtitle">#B7B7CC</color>
+    <color name="countTextColor">#FFF</color>
+    <color name="countBackgroundColor">#F45E08</color>
+    <color name="circleColor">#FFF</color>
+    <color name="backgroundBottomColor">#04E1F8</color>
+    <color name="shadowColor">#2E2E2E</color>
+
+
+
+    //
+    <color name="back_courses">#f8fafb</color>
+    <color name="color_hint">#4c4c4c</color>
+    <color name="whiteBodyColor">#FCFCFC</color>
 </resources>

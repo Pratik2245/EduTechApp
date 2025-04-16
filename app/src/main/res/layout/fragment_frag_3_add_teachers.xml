@@ -134,33 +134,6 @@
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Profile Picture -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Profile Picture (Optional)"
-            android:paddingTop="8dp" />
-
-        <ImageView
-            android:id="@+id/imgProfilePicture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/profileuser"
-            android:contentDescription="Profile Picture"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnUploadImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="23dp"
-            android:text="Upload Image"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_gravity="center" />
-
-        <!-- Submit Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSubmit"
             android:layout_width="wrap_content"
