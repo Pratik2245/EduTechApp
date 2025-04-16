@@ -43,6 +43,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="16dp"
+                        android:id="@+id/studentLayout"
                         android:gravity="center_vertical"
                         android:background="#8AE5F0">
 
@@ -114,6 +115,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="16dp"
+                        android:id="@+id/teacherLayout"
                         android:gravity="center_vertical"
                         android:background="#F6D0ED">
 

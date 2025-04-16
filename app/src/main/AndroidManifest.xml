@@ -11,7 +11,6 @@
     <application
         android:name=".ScreenShotAndCaptureValidation.BaseActivityForScreenShots"
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JavaCP"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".Admin.UserListActivity"
+            android:exported="false" />
         <activity
             android:name=".Student.StudentStartCourseActivity"
             android:exported="false" />
@@ -31,23 +34,17 @@
             android:exported="false" />
         <activity
             android:name=".Teacher.TeacherHomeActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".Admin.AdminHomeActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing">
-
-        </activity>
+            android:windowSoftInputMode="adjustNothing"></activity>
         <activity
             android:name=".Student.HomeActivityStudents"
             android:exported="false" />
         <activity
             android:name=".Common.SignUpActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".Common.SplashScreenActivity"
             android:exported="true">
@@ -59,9 +56,7 @@
         </activity>
         <activity
             android:name=".Common.LoginActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
