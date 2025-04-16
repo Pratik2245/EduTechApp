@@ -57,7 +57,7 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
         holder.courseTitle.setText(course.getTitle());
         holder.courseDescription.setText(course.getDescription());
         holder.coursePrice.setText("₹" + course.getPrice());
-        holder.tvTeacherName.setText("By "+course.getTeacherName());
+        holder.tvTeacherName.setText("By"+course.getTeacherName());
 
         holder.BuyCourse.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -134,6 +134,10 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
     @Override
     public int getItemCount() {
         return courseList.size();
+    }
+    public void filterList(List<CourseModelStudent> filteredList) {
+        this.courseList = filteredList;
+        notifyDataSetChanged();
     }
 
     public static class CourseViewHolder extends RecyclerView.ViewHolder {
