@@ -57,6 +57,7 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
         holder.courseTitle.setText(course.getTitle());
         holder.courseDescription.setText(course.getDescription());
         holder.coursePrice.setText("₹" + course.getPrice());
+        holder.tvTeacherName.setText("By "+course.getTeacherName());
 
         holder.BuyCourse.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -111,7 +112,7 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
             checkout.setKeyID("rzp_test_tpyHJaccSpSIuW");
 
             JSONObject options = new JSONObject();
-            options.put("name", "Your App Name");
+            options.put("name", "EduTechApp");
             options.put("description", course.getTitle());
             options.put("currency", "INR");
             options.put("amount", finalAmount);
@@ -138,7 +139,7 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
     public static class CourseViewHolder extends RecyclerView.ViewHolder {
         ImageView courseThumbnail;
         Button BuyCourse;
-        TextView courseTitle, courseDescription, coursePrice;
+        TextView courseTitle, courseDescription, coursePrice,tvTeacherName;
 
         public CourseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -147,6 +148,7 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
             courseDescription = itemView.findViewById(R.id.tvCourseDescription);
             coursePrice = itemView.findViewById(R.id.tvCoursePrice);
             BuyCourse = itemView.findViewById(R.id.BuyCourse);
+            tvTeacherName=itemView.findViewById(R.id.tvTeacherName);
         }
     }
 }
