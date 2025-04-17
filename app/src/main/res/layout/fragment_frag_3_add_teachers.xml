@@ -125,10 +125,12 @@
             app:boxStrokeColor="@color/teal_700"
             app:boxStrokeWidthFocused="2dp"
             android:hint="Password"
+            android:visibility="invisible"
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />

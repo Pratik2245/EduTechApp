@@ -38,9 +38,9 @@ public class CourseAdapterAdmin extends RecyclerView.Adapter<CourseAdapterAdmin.
         holder.courseName.setText(course.getCourseName());
         holder.courseDescription.setText(course.getCourseDescription());
         holder.coursePrice.setText("Price: ₹" + course.getPrice());
-        String secureUrl = course.getThumbnailUrl().replace("http://", "https://");
+//        String secureUrl = course.getThumbnailUrl().replace("http://", "https://");
         Glide.with(context)
-                .load(secureUrl)
+                .load(course.getThumbnailUrl())
                 .placeholder(R.drawable.placeholder)
                 .into(holder.courseThumbnail);
     }

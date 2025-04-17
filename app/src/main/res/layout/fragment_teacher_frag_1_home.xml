@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     tools:context=".Teacher.TeacherFrag_1Home">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
         <!-- Title Section -->
         <TextView
             android:layout_width="match_parent"
@@ -48,8 +48,6 @@
                         android:hint="Course Title"
                         android:textColorHint="@color/black"/>
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- Course Description -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,7 +94,6 @@
                     android:layout_marginTop="8dp"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
-                <!-- Course Video -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -125,7 +122,6 @@
                     android:layout_marginTop="8dp"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
-                <!-- Course Price -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,7 +136,6 @@
                         android:inputType="numberDecimal"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Upload Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnUploadCourse"
                     android:layout_width="match_parent"

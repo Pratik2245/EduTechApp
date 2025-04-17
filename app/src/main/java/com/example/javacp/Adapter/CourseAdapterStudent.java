@@ -48,9 +48,9 @@ public class CourseAdapterStudent extends RecyclerView.Adapter<CourseAdapterStud
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
         CourseModelStudent course = courseList.get(position);
 
-        String secureUrl = course.getThumbnailUrl().replace("http://", "https://");
+//        String secureUrl = course.getThumbnailUrl().replace("http://", "https://");
         Glide.with(context)
-                .load(secureUrl)
+                .load(course.getThumbnailUrl())
                 .placeholder(R.drawable.placeholder)
                 .into(holder.courseThumbnail);
 

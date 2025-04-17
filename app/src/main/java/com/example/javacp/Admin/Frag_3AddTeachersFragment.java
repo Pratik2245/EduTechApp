@@ -64,7 +64,8 @@ public class Frag_3AddTeachersFragment extends Fragment {
         String qualifications = etQualifications.getText().toString().trim();
         String specialization = etSpecialization.getText().toString().trim();
         String experience = etExperience.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+        //String password = etPassword.getText().toString().trim();
+        String password = generateRandomPassword(10);
 
         if (TextUtils.isEmpty(fullName) || TextUtils.isEmpty(email) || TextUtils.isEmpty(phone) ||
                 TextUtils.isEmpty(qualifications) || TextUtils.isEmpty(specialization) ||
@@ -131,7 +132,15 @@ public class Frag_3AddTeachersFragment extends Fragment {
         i.setType("message/rfc822");
         startActivity(Intent.createChooser(i,"choose an email client: "));
     }
-
+    private String generateRandomPassword(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%";
+        StringBuilder password = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int index = (int) (Math.random() * chars.length());
+            password.append(chars.charAt(index));
+        }
+        return password.toString();
+    }
     private void clearFields() {
         etFullName.setText("");
         etEmail.setText("");

@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
@@ -33,11 +35,20 @@ public class StudentStartCourseActivity extends AppCompatActivity {
 
     // Add these:
     private String videoUrl, courseTitle, thumbnail, teacherName, teacherId, studentId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_student_start_course);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Enable back button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         playerView = findViewById(R.id.playerView);
         btnFullscreen = findViewById(R.id.btnFullscreen);
@@ -60,6 +71,13 @@ public class StudentStartCourseActivity extends AppCompatActivity {
             player.setMediaItem(mediaItem);
             player.prepare();
             player.play();
+
+            // Restore the previous playback position
+            long savedPosition = getSharedPreferences("player_state", MODE_PRIVATE)
+                    .getLong("current_position", 0);
+            if (savedPosition > 0) {
+                player.seekTo(savedPosition);
+            }
         }
 
         player.addListener(new Player.Listener() {
@@ -72,6 +90,7 @@ public class StudentStartCourseActivity extends AppCompatActivity {
             }
         });
     }
+
     private void toggleFullscreen() {
         if (isFullscreen) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -94,11 +113,27 @@ public class StudentStartCourseActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             isFullscreen = false;
         }
+
+        // Restore position after configuration change
+        long savedPosition = getSharedPreferences("player_state", MODE_PRIVATE)
+                .getLong("current_position", 0);
+        if (savedPosition > 0) {
+            player.seekTo(savedPosition);
+        }
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         saveProgressToFirestore();
+        // Save the current position of the video player
+        if (player != null) {
+            long currentPosition = player.getCurrentPosition();
+            getSharedPreferences("player_state", MODE_PRIVATE)
+                    .edit()
+                    .putLong("current_position", currentPosition)
+                    .apply();
+        }
         player.pause();
     }
 
@@ -109,12 +144,12 @@ public class StudentStartCourseActivity extends AppCompatActivity {
         player.release();
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         player.play();
     }
+
     private void saveProgressToFirestore() {
         if (player == null || player.getDuration() <= 0) return;
 
@@ -146,4 +181,9 @@ public class StudentStartCourseActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed(); // Go back when the back button is pressed
+        return true;
+    }
 }

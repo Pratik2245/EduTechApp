@@ -79,9 +79,6 @@ public class SubscribedCourseAdapter extends RecyclerView.Adapter<SubscribedCour
             i.putExtra("thumbnail",course.getCourseThumbnailUrl());
             i.putExtra("teacherName",course.getTeacherName());
             i.putExtra("teacherId",course.getTeacherId());
-
-
-
             context.startActivity(i);
         });
     }
