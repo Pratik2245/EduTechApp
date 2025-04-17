@@ -122,7 +122,6 @@ public class TeacherFrag_1Home extends Fragment {
                                 .addOnSuccessListener(documentSnapshot -> {
                                     if (documentSnapshot.exists()) {
                                         String teacherName = documentSnapshot.getString("fullName");  // Use your actual field key
-                                        // ✅ Save course with teacher name
                                         saveToFirestore(title, description, price, thumbnailUrl, videoUrl, teacherName);
                                     } else {
                                         Toast.makeText(getContext(), "Teacher info not found", Toast.LENGTH_SHORT).show();

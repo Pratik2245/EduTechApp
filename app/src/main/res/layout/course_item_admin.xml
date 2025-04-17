@@ -69,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:text="Buy!"
                 android:textSize="14sp"
+                android:visibility="invisible"
                 android:backgroundTint="@android:color/holo_blue_dark"
                 android:textColor="@android:color/white"
                 android:padding="6dp"

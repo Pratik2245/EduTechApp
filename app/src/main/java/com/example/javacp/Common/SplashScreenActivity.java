@@ -1,5 +1,6 @@
 package com.example.javacp.Common;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.javacp.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity {
     FirebaseAuth auth;
 
